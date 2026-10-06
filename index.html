@@ -766,7 +766,165 @@
       .main-content { padding: 12px; }
       .brand-main-title { font-size: 13.5px; }
     }
-  </style>
+  
+    /* Twitter Header Badge */
+    .twitter-account-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(29, 155, 240, 0.1);
+      border: 1px solid rgba(29, 155, 240, 0.35);
+      border-radius: 30px;
+      padding: 6px 14px 6px 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .twitter-account-badge:hover {
+      background: rgba(29, 155, 240, 0.2);
+      border-color: rgba(29, 155, 240, 0.6);
+      box-shadow: 0 0 15px rgba(29, 155, 240, 0.3);
+    }
+    .user-avatar-mini {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1.5px solid #1d9bf0;
+      object-fit: cover;
+    }
+    .user-meta-mini {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      text-align: right;
+    }
+    .user-name-mini {
+      font-size: 12px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .user-handle-mini {
+      font-size: 10px;
+      color: #94a3b8;
+      font-family: monospace;
+      direction: ltr;
+    }
+    .status-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      margin-right: 4px;
+    }
+
+    /* Publish to Twitter Action Button */
+    .btn-post-twitter {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #1d9bf0, #0284c7);
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12.5px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+      transition: all 0.2s ease;
+    }
+    .btn-post-twitter:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(2, 132, 199, 0.5);
+      filter: brightness(1.1);
+    }
+
+    /* Card Theme Selector Chips */
+    .card-theme-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .theme-chip {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .theme-chip.active {
+      border-color: var(--accent-purple);
+      background: rgba(168, 85, 247, 0.18);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+    }
+
+    /* Card Controls Box */
+    .card-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 20px;
+      background: rgba(18, 22, 38, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 18px;
+    }
+
+    /* Inline Tweet Edit */
+    .tweet-edit-btn {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tweet-edit-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    /* Twitter Publish Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-card {
+      background: #0f1423;
+      border: 1px solid rgba(29, 155, 240, 0.4);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 520px;
+      padding: 24px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+      animation: modalFade 0.2s ease-out;
+    }
+    @keyframes modalFade {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+</style>
 </head>
 <body>
 
@@ -803,7 +961,16 @@
         </div>
       </div>
 
-      <div class="header-actions">
+      <div class="header-actions" style="display: flex; align-items: center; gap: 12px;">
+        <div class="twitter-account-badge" id="headerTwitterBadge" title="اکانت توییتر متصل">
+          <img id="headerUserAvatar" src="https://pbs.twimg.com/profile_images/1857471163951132672/6Issqt4W_normal.jpg" class="user-avatar-mini" alt="MMD">
+          <div class="user-meta-mini">
+            <div class="user-name-mini"><span id="headerUserName">MMD</span> <span style="color:#1d9bf0;">☑️</span></div>
+            <div class="user-handle-mini" id="headerUserHandle">@mmdsh0n2</div>
+          </div>
+          <span class="status-pulse-dot" title="متصل"></span>
+        </div>
+
         <button class="btn-create-custom" id="btnOpenCustomModal">
           <span>✨ ساخت ترد دلخواه</span>
         </button>
@@ -924,11 +1091,17 @@
               <button class="format-btn active" id="btnFmtTwitter">🐦 ترد توییتر / X</button>
               <button class="format-btn" id="btnFmtTelegram">✈️ پست تلگرام</button>
               <button class="format-btn" id="btnFmtLinkedin">💼 پست لینکدین</button>
+              <button class="format-btn" id="btnFmtPrompt">🎨 پرامپت Midjourney</button>
             </div>
 
-            <button class="btn-copy-all" id="btnCopyMain">
-              <span>📋 کپی کل متن</span>
-            </button>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <button class="btn-post-twitter" id="btnOpenPublishTwitterModal">
+                <span>🚀 انتشار در توییتر (@mmdsh0n2)</span>
+              </button>
+              <button class="btn-copy-all" id="btnCopyMain">
+                <span>📋 کپی کل متن</span>
+              </button>
+            </div>
           </div>
 
           <!-- 1. Twitter Thread Mockup -->
@@ -941,6 +1114,8 @@
 
           <!-- 3. LinkedIn Raw Post -->
           <div id="containerLinkedinRaw" class="raw-text-panel" style="display: none;"></div>
+          <!-- 4. Midjourney Prompt Panel -->
+          <div id="containerPromptRaw" class="raw-text-panel" style="display: none; font-family: monospace; direction: ltr; text-align: left; background: rgba(0,0,0,0.4); border-left: 3px solid #ec4899;"></div>
 
         </div>
 
@@ -950,24 +1125,71 @@
     <!-- VIEW 3: VIRAL IMAGE CARD STUDIO -->
     <div id="view-card-studio" style="display: none;">
       <div class="studio-preview-card card-creator-wrap">
-        <div style="text-align: center; max-width: 600px;">
-          <h2 style="font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 6px;">📸 استودیو تولید کارت گرافیکی وایرال توییتر و استوری</h2>
-          <p style="font-size: 12px; color: var(--text-muted);">
-            تولید خودکار کاور گرافیکی ۱۶:۹ با ابعاد استاندارد توییتر (1200x675) و استایل نئونی برای افزایش ۵ برابری نرخ کلیک و اشتراک‌گذاری!
+        <div style="text-align: center; max-width: 750px; margin-bottom: 12px;">
+          <h2 style="font-size: 20px; font-weight: 900; color: #fff; margin-bottom: 6px;">📸 استودیو پیشرفته تولید کاور گرافیکی ۱۶:۹ هوش مصنوعی</h2>
+          <p style="font-size: 12.5px; color: var(--text-muted);">
+            طراحی استاندارد توییتر/لینکدین (1200x675) با تم‌های سایبرپانک و متالیک، گلس‌مورفیسم لایه‌ای، تایپوگرافی های‌کنتراست و آواتار متصل توییتر
           </p>
         </div>
 
-        <!-- Real Canvas -->
+        <!-- Theme Selector Bar -->
+        <div class="card-theme-bar">
+          <span style="font-size: 12px; font-weight: 700; color: #94a3b8; display: flex; align-items: center;">🎨 تم طراحی:</span>
+          <button class="theme-chip active" data-theme="cyber_obsidian">🔮 سایبر ابسیدین (Cyber Obsidian)</button>
+          <button class="theme-chip" data-theme="emerald_matrix">⚡ هکر ماتریکس (Emerald Matrix)</button>
+          <button class="theme-chip" data-theme="cosmic_blue">🌌 کاسمیک بلو (Cosmic Blue)</button>
+          <button class="theme-chip" data-theme="sunset_gold">🌅 سان‌ست تیتانیوم (Sunset Gold)</button>
+        </div>
+
+        <!-- Real High-Def Canvas -->
         <canvas id="viralCardCanvas" width="1200" height="675"></canvas>
 
-        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+        <!-- Quick Action Buttons -->
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px;">
           <button class="btn-download-card" id="btnDownloadCardPng">
-            <span>💾 دانلود تصویر باکیفیت PNG (1200x675)</span>
+            <span>💾 دانلود کیفیت بالا PNG (1200x675)</span>
           </button>
-          <button class="format-btn" id="btnRenderCardAgain" style="padding: 10px 16px;">
-            <span>🔄 تازه‌سازی استایل کارت</span>
+          <button class="btn-create-custom" id="btnCopyCardImage" style="padding: 10px 18px; font-size: 13px;">
+            <span>📋 کپی مستقیم عکس در کلیپ‌بورد</span>
+          </button>
+          <button class="btn-post-twitter" id="btnPostCardWithThread">
+            <span>🚀 انتشار این کاور همراه با ترد در توییتر</span>
           </button>
         </div>
+
+        <!-- Live Card Customizer Controls -->
+        <div class="card-controls-grid">
+          <div>
+            <label class="control-label">عنوان اصلی کارت:</label>
+            <input type="text" class="control-input" id="cardCustomTitle" value="مدل انقلابی DeepSeek-R1 و جهش در استدلال خودکار">
+          </div>
+          <div>
+            <label class="control-label">زیرعنوان تحلیلی:</label>
+            <input type="text" class="control-input" id="cardCustomSubtitle" value="چگونه معماری استدلالی باز، معادلات مدل‌های بسته تجاری را برهم زد؟">
+          </div>
+          <div>
+            <label class="control-label">نرخ پتانسیل وایرال (درصد):</label>
+            <input type="range" id="cardCustomVirality" min="70" max="99" value="96" style="width: 100%; accent-color: var(--accent-purple);">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-dim); margin-top: 4px;">
+              <span>۷۰٪</span>
+              <span id="valCustomVirality" style="color: #f59e0b; font-weight: 700;">۹۶٪</span>
+              <span>۹۹٪</span>
+            </div>
+          </div>
+          <div>
+            <label class="control-label">نکته کلیدی اول:</label>
+            <input type="text" class="control-input" id="cardCustomTakeaway1" value="ساختار RL خالص و استدلال گام‌به‌گام (Chain-of-Thought) بدون نیاز به داده‌های میلیونی">
+          </div>
+          <div>
+            <label class="control-label">نکته کلیدی دوم:</label>
+            <input type="text" class="control-input" id="cardCustomTakeaway2" value="کاهش هزینه‌های استنتاج تا ۹۰٪ در مقایسه با ارائه‌دهندگان انحصاری و سهولت ران کردن مستقل">
+          </div>
+          <div>
+            <label class="control-label">نکته کلیدی سوم:</label>
+            <input type="text" class="control-input" id="cardCustomTakeaway3" value="ضربه سنگین به انحصار مدل‌های تجاری و شتاب‌بخشی بی‌سابقه به توسعه سیستم‌های ایجنتیک">
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1175,7 +1397,9 @@
         });
         const data = await res.json();
         if (data.status === 'ok') {
-          currentThreadData = data.data;
+          currentThreadData = data.data || data;
+          currentTweetsList = [...(currentThreadData.tweets || [])];
+          currentMidjourneyPrompt = currentThreadData.midjourney_prompt || '';
           renderThreadOutputs();
           renderViralCanvas();
         }
@@ -1205,6 +1429,9 @@
 
     // --- RENDER THREAD MOCKUP ---
     function renderThreadOutputs() {
+
+      const threadBadge = document.querySelector('[data-tab="tab-thread-studio"] .tab-badge');
+      if (threadBadge) threadBadge.textContent = (currentThreadData.tweets || []).length + ' توییت';
       if (!currentThreadData) return;
 
       // 1. Twitter Thread Mockup
@@ -1214,17 +1441,17 @@
         tweetsHtml += `
           <div class="tweet-mockup-item">
             <div class="tweet-avatar-col">
-              <div class="avatar-circle">⚡</div>
+              <img src="${twitterUserData.avatar}" class="avatar-circle" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:1.5px solid #1d9bf0;">
               <div class="thread-connecting-line"></div>
             </div>
             <div class="tweet-content-col">
               <div class="tweet-author-row">
                 <div class="tweet-author-info">
-                  <span class="author-name">محمد | AI Architect</span>
+                  <span class="author-name">${twitterUserData.name}</span>
                   <span class="author-verified">☑️</span>
-                  <span class="author-handle">@Mohammad_AI</span>
+                  <span class="author-handle">@${twitterUserData.username}</span>
                 </div>
-                <button class="btn-copy-tweet" onclick="copyText(${JSON.stringify(tw)})">📋 کپی</button>
+                <div style="display:flex;gap:6px;"><button class="tweet-edit-btn" onclick="editTweetText(${idx})">✏️ ویرایش</button><button class="btn-copy-tweet" onclick="copyText(${JSON.stringify(tw)})">📋 کپی</button></div>
               </div>
 
               <div class="tweet-body-text">${tw}</div>
@@ -1307,120 +1534,377 @@
     };
 
     // --- CANVAS VIRAL IMAGE GENERATOR ---
+    // Global User & Studio State
+    let twitterUserData = {
+      name: 'MMD',
+      username: 'mmdsh0n2',
+      avatar: 'https://pbs.twimg.com/profile_images/1857471163951132672/6Issqt4W_normal.jpg',
+      connected: true
+    };
+    let currentCardTheme = 'cyber_obsidian';
+    let currentMidjourneyPrompt = '';
+    let currentTweetsList = [];
+
+    // Preload user avatar image for canvas
+    let userAvatarImg = new Image();
+    userAvatarImg.crossOrigin = 'anonymous';
+    userAvatarImg.src = twitterUserData.avatar;
+
+    // Themes configuration for Canvas
+    const CARD_THEMES = {
+      cyber_obsidian: {
+        bg1: '#070814',
+        bg2: '#0b0f1d',
+        glow1: 'rgba(168, 85, 247, 0.28)', // purple
+        glow2: 'rgba(6, 182, 212, 0.22)',  // cyan
+        glow3: 'rgba(236, 72, 153, 0.20)', // pink
+        accent: '#a855f7',
+        accent2: '#06b6d4',
+        borderGlow: 'rgba(168, 85, 247, 0.45)',
+        boxBorder: 'rgba(168, 85, 247, 0.3)',
+        boxBg: 'rgba(15, 20, 36, 0.7)',
+        metricBorder: 'rgba(255, 255, 255, 0.1)'
+      },
+      emerald_matrix: {
+        bg1: '#040d0a',
+        bg2: '#081812',
+        glow1: 'rgba(16, 185, 129, 0.30)', // emerald
+        glow2: 'rgba(6, 182, 212, 0.22)',  // cyan
+        glow3: 'rgba(52, 211, 153, 0.18)', // green
+        accent: '#10b981',
+        accent2: '#34d399',
+        borderGlow: 'rgba(16, 185, 129, 0.45)',
+        boxBorder: 'rgba(16, 185, 129, 0.3)',
+        boxBg: 'rgba(6, 26, 18, 0.7)',
+        metricBorder: 'rgba(16, 185, 129, 0.15)'
+      },
+      cosmic_blue: {
+        bg1: '#030712',
+        bg2: '#081329',
+        glow1: 'rgba(59, 130, 246, 0.32)', // blue
+        glow2: 'rgba(147, 51, 234, 0.24)', // purple
+        glow3: 'rgba(37, 99, 235, 0.18)',  // deep blue
+        accent: '#3b82f6',
+        accent2: '#60a5fa',
+        borderGlow: 'rgba(59, 130, 246, 0.45)',
+        boxBorder: 'rgba(59, 130, 246, 0.3)',
+        boxBg: 'rgba(8, 20, 42, 0.7)',
+        metricBorder: 'rgba(59, 130, 246, 0.15)'
+      },
+      sunset_gold: {
+        bg1: '#120a06',
+        bg2: '#1c1209',
+        glow1: 'rgba(245, 158, 11, 0.28)', // amber
+        glow2: 'rgba(239, 68, 68, 0.20)',  // red
+        glow3: 'rgba(251, 191, 36, 0.16)', // yellow
+        accent: '#f59e0b',
+        accent2: '#fbbf24',
+        borderGlow: 'rgba(245, 158, 11, 0.45)',
+        boxBorder: 'rgba(245, 158, 11, 0.3)',
+        boxBg: 'rgba(28, 18, 10, 0.7)',
+        metricBorder: 'rgba(245, 158, 11, 0.15)'
+      }
+    };
+
+    async function initTwitterUser() {
+      try {
+        const res = await fetch('/trends/api/twitter_user');
+        const data = await res.json();
+        if (data.connected && data.user) {
+          twitterUserData = {
+            name: data.user.name || 'MMD',
+            username: data.user.username || 'mmdsh0n2',
+            avatar: data.user.profileImageUrl || twitterUserData.avatar,
+            connected: true
+          };
+          userAvatarImg.src = twitterUserData.avatar;
+          
+          document.getElementById('headerUserName').textContent = twitterUserData.name;
+          document.getElementById('headerUserHandle').textContent = '@' + twitterUserData.username;
+          document.getElementById('headerUserAvatar').src = twitterUserData.avatar;
+          document.getElementById('modalUserAvatar').src = twitterUserData.avatar;
+        }
+      } catch (e) {
+        console.warn('Could not fetch twitter profile, using fallback');
+      }
+    }
+
+    function roundRect(ctx, x, y, width, height, radius) {
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + width - radius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+      ctx.lineTo(x + width, y + height - radius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+      ctx.lineTo(x + radius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+    }
+
     function renderViralCanvas() {
       const canvas = document.getElementById('viralCardCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
-      const w = canvas.width;
-      const h = canvas.height;
+      const w = 1200, h = 675;
 
-      // 1. Background Gradient
-      const grad = ctx.createLinearGradient(0, 0, w, h);
-      grad.addColorStop(0, '#070a12');
-      grad.addColorStop(0.5, '#101524');
-      grad.addColorStop(1, '#05070d');
-      ctx.fillStyle = grad;
+      const th = CARD_THEMES[currentCardTheme] || CARD_THEMES.cyber_obsidian;
+
+      const title = document.getElementById('cardCustomTitle')?.value.trim() || 'مدل انقلابی DeepSeek-R1 و جهش در استدلال خودکار';
+      const subtitle = document.getElementById('cardCustomSubtitle')?.value.trim() || 'چگونه معماری استدلالی باز، معادلات مدل‌های بسته تجاری را برهم زد؟';
+      const virality = document.getElementById('cardCustomVirality')?.value || '96';
+      const t1 = document.getElementById('cardCustomTakeaway1')?.value.trim() || 'ساختار RL خالص و استدلال گام‌به‌گام (Chain-of-Thought) بدون نیاز به داده‌های میلیونی';
+      const t2 = document.getElementById('cardCustomTakeaway2')?.value.trim() || 'کاهش هزینه‌های استنتاج تا ۹۰٪ در مقایسه با ارائه‌دهندگان انحصاری و سهولت ران کردن مستقل';
+      const t3 = document.getElementById('cardCustomTakeaway3')?.value.trim() || 'ضربه سنگین به انحصار مدل‌های تجاری و شتاب‌بخشی بی‌سابقه به توسعه سیستم‌های ایجنتیک';
+
+      // 1. Background Mesh Gradient
+      const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+      bgGrad.addColorStop(0, th.bg1);
+      bgGrad.addColorStop(1, th.bg2);
+      ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, w, h);
 
-      // Cyber Grid
+      // Multi-radial Ambient Glows
+      function drawGlow(x, y, r, color) {
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, color);
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(x - r, y - r, r * 2, r * 2);
+      }
+      drawGlow(w - 140, 110, 360, th.glow1);
+      drawGlow(160, h - 140, 380, th.glow2);
+      drawGlow(w / 2, h / 2, 280, th.glow3);
+
+      // Subtle High-Tech Dot Matrix / Grid
       ctx.strokeStyle = 'rgba(255, 255, 255, 0.035)';
       ctx.lineWidth = 1;
-      for (let x = 0; x < w; x += 60) {
+      for (let x = 40; x < w; x += 45) {
         ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
       }
-      for (let y = 0; y < h; y += 60) {
+      for (let y = 40; y < h; y += 45) {
         ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
       }
 
-      // Glowing Neon Ambient Orbs
-      const orb1 = ctx.createRadialGradient(250, 180, 30, 250, 180, 320);
-      orb1.addColorStop(0, 'rgba(168, 85, 247, 0.35)');
-      orb1.addColorStop(1, 'rgba(168, 85, 247, 0)');
-      ctx.fillStyle = orb1;
-      ctx.beginPath(); ctx.arc(250, 180, 320, 0, Math.PI * 2); ctx.fill();
+      // Outer Glass Container Frame
+      const pad = 36;
+      ctx.save();
+      roundRect(ctx, pad, pad, w - pad*2, h - pad*2, 24);
+      ctx.fillStyle = 'rgba(10, 14, 26, 0.45)';
+      ctx.fill();
+      ctx.strokeStyle = th.borderGlow;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.restore();
 
-      const orb2 = ctx.createRadialGradient(980, 480, 30, 980, 480, 350);
-      orb2.addColorStop(0, 'rgba(56, 189, 248, 0.28)');
-      orb2.addColorStop(1, 'rgba(56, 189, 248, 0)');
-      ctx.fillStyle = orb2;
-      ctx.beginPath(); ctx.arc(980, 480, 350, 0, Math.PI * 2); ctx.fill();
+      // Cyberpunk Corner HUD Reticles
+      function drawCorner(x, y, dx, dy) {
+        ctx.strokeStyle = th.accent2;
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(x + dx * 24, y);
+        ctx.lineTo(x, y);
+        ctx.lineTo(x, y + dy * 24);
+        ctx.stroke();
+      }
+      drawCorner(pad + 6, pad + 6, 1, 1);
+      drawCorner(w - pad - 6, pad + 6, -1, 1);
+      drawCorner(pad + 6, h - pad - 6, 1, -1);
+      drawCorner(w - pad - 6, h - pad - 6, -1, -1);
 
-      // Outer Frame Accent
-      ctx.strokeStyle = 'rgba(168, 85, 247, 0.45)';
-      ctx.lineWidth = 3;
-      ctx.strokeRect(35, 35, w - 70, h - 70);
-
-      const title = currentThreadData ? currentThreadData.title : (selectedTrendForThread ? selectedTrendForThread.title : 'Claude 3.7 Sonnet: First Hybrid Reasoning LLM');
-      const virality = currentThreadData ? currentThreadData.virality_score : 98;
-
-      // Top Right Badge (Category / AI Radar)
-      ctx.fillStyle = 'rgba(168, 85, 247, 0.18)';
-      ctx.fillRect(w - 360, 65, 290, 46);
-      ctx.strokeStyle = '#a855f7';
+      // Top Header: Right Badge (Category Tag)
+      ctx.save();
+      roundRect(ctx, w - pad - 290, pad + 24, 265, 44, 22);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+      ctx.fill();
+      ctx.strokeStyle = th.accent;
       ctx.lineWidth = 1.5;
-      ctx.strokeRect(w - 360, 65, 290, 46);
-
-      ctx.fillStyle = '#f3e8ff';
-      ctx.font = 'bold 21px Vazirmatn, sans-serif';
-      ctx.textAlign = 'right';
-      ctx.direction = 'rtl';
-      ctx.fillText('🧠 رادار و کالبدشکافی ترند AI', w - 90, 96);
-
-      // Top Left Virality Pill
-      ctx.fillStyle = 'rgba(245, 158, 11, 0.18)';
-      ctx.fillRect(70, 65, 230, 46);
-      ctx.strokeStyle = '#f59e0b';
-      ctx.strokeRect(70, 65, 230, 46);
-      ctx.fillStyle = '#fbbf24';
-      ctx.fillText(`🔥 ${virality}٪ پتانسیل وایرال`, 280, 96);
-
-      // Main Topic Headline
+      ctx.stroke();
       ctx.fillStyle = '#ffffff';
-      ctx.font = '800 40px Vazirmatn, sans-serif';
-      ctx.textAlign = 'right';
-      wrapCanvasText(ctx, title, w - 80, 195, w - 160, 52);
+      ctx.font = 'bold 17px Vazirmatn';
+      ctx.textAlign = 'center';
+      ctx.direction = 'rtl';
+      ctx.fillText('⚡ ترند داغ هوش مصنوعی • LLM', w - pad - 157, pad + 52);
+      ctx.restore();
 
-      // Key Takeaway Box
-      ctx.fillStyle = 'rgba(18, 24, 40, 0.9)';
-      ctx.fillRect(70, 310, w - 140, 180);
-      ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+      // Top Header: Left Badge (Virality with flame)
+      ctx.save();
+      roundRect(ctx, pad + 25, pad + 24, 245, 44, 22);
+      ctx.fillStyle = 'rgba(239, 68, 68, 0.15)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(239, 68, 68, 0.45)';
       ctx.lineWidth = 1.5;
-      ctx.strokeRect(70, 310, w - 140, 180);
+      ctx.stroke();
+      ctx.fillStyle = '#fca5a5';
+      ctx.font = 'bold 17px Vazirmatn';
+      ctx.textAlign = 'center';
+      ctx.direction = 'rtl';
+      ctx.fillText('🔥 ' + virality + '٪ پتانسیل وایرال توییتر', pad + 147, pad + 52);
+      ctx.restore();
 
-      ctx.fillStyle = '#38bdf8';
-      ctx.font = 'bold 22px Vazirmatn, sans-serif';
-      ctx.fillText('💡 مهم‌ترین دستاوردها و نکات کلیدی:', w - 95, 350);
-
-      ctx.fillStyle = '#e2e8f0';
-      ctx.font = '500 19px Vazirmatn, sans-serif';
-      const takeaways = currentThreadData ? currentThreadData.key_takeaways : [
-        "شکستن رکوردهای بنچمارک در تست‌های استدلال و کدنویسی خودکار",
-        "پتانسیل فوق‌العاده برای خودکارسازی تسک‌های پیچیده برنامه‌نویسی",
-        "دسترسی عمومی و قابلیت اتصال مستقیم به ابزارها و APIها"
-      ];
-      ctx.fillText(`• ${takeaways[0] || ''}`, w - 95, 395);
-      ctx.fillText(`• ${takeaways[1] || ''}`, w - 95, 435);
-      ctx.fillText(`• ${takeaways[2] || ''}`, w - 95, 475);
-
-      // Bottom Right Author
-      ctx.fillStyle = '#94a3b8';
-      ctx.font = 'bold 19px Vazirmatn, sans-serif';
+      // Super-title Tag
+      ctx.fillStyle = th.accent2;
+      ctx.font = 'bold 15px monospace';
       ctx.textAlign = 'right';
       ctx.direction = 'rtl';
-      ctx.fillText('معمار محتوا و هوش مصنوعی • @Mohammad_AI', w - 80, h - 85);
+      ctx.fillText('// ARCHITECTURAL BREAKTHROUGH & TREND REPORT', w - pad - 35, 142);
 
-      // Bottom Left Official Watermark Pill
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-      ctx.fillRect(70, h - 110, 260, 42);
-      ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+      // Hero Main Title (Bold Neon Glow)
+      ctx.save();
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = th.accent;
+      ctx.shadowBlur = 18;
+      ctx.font = '900 34px Vazirmatn';
+      ctx.textAlign = 'right';
+      ctx.direction = 'rtl';
+      wrapCanvasText(ctx, title, w - pad - 35, 188, 1080, 44, 1);
+      ctx.restore();
+
+      // Subtitle / English Tag
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '600 18px Vazirmatn';
+      ctx.textAlign = 'right';
+      ctx.direction = 'rtl';
+      wrapCanvasText(ctx, subtitle, w - pad - 35, 230, 1080, 26, 1);
+
+      // 3 Glass Metric Cards
+      const metrics = [
+        { label: 'نرخ رشد گیت‌هاب', value: '+۴۲۰٪ انفجاری', icon: '⚡', color: '#38bdf8' },
+        { label: 'کیفیت استدلال منطقی', value: 'برابری با رقبا', icon: '🧠', color: th.accent },
+        { label: 'دسترسی و استقرار', value: 'متن‌باز و بهینه', icon: '🔓', color: '#34d399' }
+      ];
+      const metricW = 340;
+      const metricH = 80;
+      const startY = 265;
+      metrics.forEach((m, i) => {
+        const mx = w - pad - 35 - (i * (metricW + 22)) - metricW;
+        ctx.save();
+        roundRect(ctx, mx, startY, metricW, metricH, 16);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+        ctx.fill();
+        ctx.strokeStyle = th.metricBorder;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // Top accent line
+        roundRect(ctx, mx + 16, startY + 4, metricW - 32, 2, 1);
+        ctx.fillStyle = m.color;
+        ctx.fill();
+
+        // Icon & Value
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 21px Vazirmatn';
+        ctx.textAlign = 'right';
+        ctx.direction = 'rtl';
+        ctx.fillText(m.icon + ' ' + m.value, mx + metricW - 20, startY + 38);
+
+        // Label
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '500 15px Vazirmatn';
+        ctx.fillText(m.label, mx + metricW - 20, startY + 64);
+        ctx.restore();
+      });
+
+      // Executive Takeaways Dark Glass Panel
+      const boxY = 368;
+      const boxH = 175;
+      const boxW = w - (pad * 2) - 70;
+      const boxX = pad + 35;
+      ctx.save();
+      roundRect(ctx, boxX, boxY, boxW, boxH, 18);
+      ctx.fillStyle = th.boxBg;
+      ctx.fill();
+      ctx.strokeStyle = th.boxBorder;
       ctx.lineWidth = 1.5;
-      ctx.strokeRect(70, h - 110, 260, 42);
-      
-      ctx.fillStyle = '#38bdf8';
+      ctx.stroke();
+
+      // Glowing vertical right accent bar
+      roundRect(ctx, boxX + boxW - 6, boxY + 16, 6, boxH - 32, 3);
+      ctx.fillStyle = th.accent;
+      ctx.shadowColor = th.accent;
+      ctx.shadowBlur = 10;
+      ctx.fill();
+      ctx.restore();
+
+      // Bullets
+      const takeaways = [
+        '💎 ' + t1,
+        '🚀 ' + t2,
+        '🎯 ' + t3
+      ];
+      ctx.fillStyle = '#f1f5f9';
+      ctx.font = '600 17.5px Vazirmatn';
+      ctx.textAlign = 'right';
+      ctx.direction = 'rtl';
+      takeaways.forEach((t, i) => {
+        wrapCanvasText(ctx, t, boxX + boxW - 28, boxY + 44 + (i * 44), boxW - 45, 24, 1);
+      });
+
+      // Footer: Left Official Pill
+      ctx.save();
+      roundRect(ctx, pad + 35, h - pad - 54, 300, 42, 21);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.fillStyle = '#cbd5e1';
+      ctx.font = 'bold 15px Vazirmatn';
       ctx.textAlign = 'center';
-      ctx.direction = 'ltr';
-      ctx.font = 'bold 18px Vazirmatn, sans-serif';
-      ctx.fillText('⚡ c.q6v.ir/trends', 200, h - 83);
+      ctx.direction = 'rtl';
+      ctx.fillText('⚡ AI Trend Hunter • c.q6v.ir/trends', pad + 35 + 150, h - pad - 28);
+      ctx.restore();
+
+      // Footer: Right User Profile Capsule
+      const authorW = 340;
+      const authorX = w - pad - 35 - authorW;
+      ctx.save();
+      roundRect(ctx, authorX, h - pad - 54, authorW, 42, 21);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.06)';
+      ctx.fill();
+      ctx.strokeStyle = th.accent;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Avatar circle
+      const avatarX = authorX + authorW - 21;
+      const avatarY = h - pad - 33;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(avatarX, avatarY, 15, 0, Math.PI * 2);
+      ctx.clip();
+      if (userAvatarImg.complete && userAvatarImg.naturalWidth > 0) {
+        try {
+          ctx.drawImage(userAvatarImg, avatarX - 15, avatarY - 15, 30, 30);
+        } catch(e) {
+          ctx.fillStyle = '#8b5cf6';
+          ctx.fill();
+        }
+      } else {
+        ctx.fillStyle = '#8b5cf6';
+        ctx.fill();
+      }
+      ctx.restore();
+
+      // Avatar border
+      ctx.beginPath();
+      ctx.arc(avatarX, avatarY, 15, 0, Math.PI * 2);
+      ctx.strokeStyle = '#c084fc';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // User text
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 16px Vazirmatn';
+      ctx.textAlign = 'right';
+      ctx.direction = 'rtl';
+      ctx.fillText(twitterUserData.name + ' ☑️', avatarX - 25, h - pad - 32);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '500 13.5px monospace';
+      ctx.fillText('@' + twitterUserData.username + ' • معمار AI', avatarX - 95, h - pad - 32);
+      ctx.restore();
     }
 
     function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
@@ -1441,14 +1925,126 @@
       ctx.fillText(line, x, y);
     }
 
-    document.getElementById('btnRenderCardAgain').addEventListener('click', renderViralCanvas);
-    document.getElementById('btnDownloadCardPng').addEventListener('click', () => {
+    document.getElementById('btnRenderCardAgain')?.addEventListener('click', renderViralCanvas);
+    document.getElementById('btnDownloadCardPng')?.addEventListener('click', () => {
       const canvas = document.getElementById('viralCardCanvas');
+      if (!canvas) return;
       const link = document.createElement('a');
       link.download = `AI-Trend-Card-${Date.now()}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
     });
+
+    // Init Twitter profile from backend
+    initTwitterUser();
+
+      // Format button prompt
+      document.getElementById('btnFmtPrompt')?.addEventListener('click', () => setActiveFormat('prompt'));
+
+      // Theme Chips Switcher
+      document.querySelectorAll('.theme-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.theme-chip').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentCardTheme = btn.getAttribute('data-theme') || 'cyber_obsidian';
+          renderViralCanvas();
+        });
+      });
+
+      // Card Live Customizer Inputs
+      ['cardCustomTitle', 'cardCustomSubtitle', 'cardCustomTakeaway1', 'cardCustomTakeaway2', 'cardCustomTakeaway3'].forEach(id => {
+        document.getElementById(id)?.addEventListener('input', () => renderViralCanvas());
+      });
+      document.getElementById('cardCustomVirality')?.addEventListener('input', (e) => {
+        if (document.getElementById('valCustomVirality')) {
+          document.getElementById('valCustomVirality').textContent = e.target.value + '٪';
+        }
+        renderViralCanvas();
+      });
+
+      // Copy Card Image to Clipboard
+      document.getElementById('btnCopyCardImage')?.addEventListener('click', async () => {
+        const canvas = document.getElementById('viralCardCanvas');
+        if (!canvas) return;
+        try {
+          canvas.toBlob(async (blob) => {
+            if (!blob) return;
+            await navigator.clipboard.write([
+              new ClipboardItem({ 'image/png': blob })
+            ]);
+            showToast('✅ کاور گرافیکی با کیفیت بالا در کلیپ‌بورد کپی شد!');
+          });
+        } catch(err) {
+          showToast('⚠️ مرورگر اجازه دسترسی مستقیم کلیپ‌بورد تصویر نداد. از دکمه دانلود استفاده کنید.');
+        }
+      });
+
+      // Twitter Publish Modal
+      const modalPublish = document.getElementById('modalPublishTwitter');
+      const openModalBtn = document.getElementById('btnOpenPublishTwitterModal');
+      const openModalBtn2 = document.getElementById('btnPostCardWithThread');
+      const closeModalBtn = document.getElementById('btnCloseTwitterModal');
+      const cancelModalBtn = document.getElementById('btnCancelPublish');
+      const confirmPublishBtn = document.getElementById('btnConfirmPublishTwitter');
+
+      function openTwitterModal() {
+        if (!currentTweetsList || currentTweetsList.length === 0) {
+          showToast('⚠️ ابتدا یک ترد از رادار انتخاب یا تولید کنید.');
+          return;
+        }
+        document.getElementById('modalTweetCount').textContent = currentTweetsList.length + ' بخش';
+        document.getElementById('publishStatusAlert').style.display = 'none';
+        modalPublish.style.display = 'flex';
+      }
+
+      openModalBtn?.addEventListener('click', openTwitterModal);
+      openModalBtn2?.addEventListener('click', openTwitterModal);
+      closeModalBtn?.addEventListener('click', () => modalPublish.style.display = 'none');
+      cancelModalBtn?.addEventListener('click', () => modalPublish.style.display = 'none');
+
+      confirmPublishBtn?.addEventListener('click', async () => {
+        const attachCover = document.getElementById('checkAttachCover')?.checked;
+        const statusBox = document.getElementById('publishStatusAlert');
+        statusBox.style.display = 'block';
+        statusBox.style.background = 'rgba(29, 155, 240, 0.15)';
+        statusBox.style.color = '#38bdf8';
+        statusBox.textContent = '⏳ در حال ارسال رشته‌توییت به حساب توییتر شما... لطفاً چند ثانیه صبر کنید...';
+        confirmPublishBtn.disabled = true;
+
+        let imgBase64 = null;
+        if (attachCover) {
+          const canvas = document.getElementById('viralCardCanvas');
+          if (canvas) imgBase64 = canvas.toDataURL('image/png');
+        }
+
+        try {
+          const res = await fetch('/trends/api/twitter_post', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              tweets: currentTweetsList,
+              image_base64: imgBase64
+            })
+          });
+          const result = await res.json();
+          if (result.ok) {
+            statusBox.style.background = 'rgba(16, 185, 129, 0.2)';
+            statusBox.style.color = '#34d399';
+            statusBox.innerHTML = '🎉 رشته‌توییت با موفقیت در اکانت شما منتشر شد!<br><a href="' + result.url + '" target="_blank" style="color:#38bdf8; font-weight:800; text-decoration:underline; margin-top:6px; display:inline-block;">🔗 مشاهده توییت زنده در X.com</a>';
+            showToast('🚀 ترد در توییتر منتشر شد!');
+          } else {
+            statusBox.style.background = 'rgba(239, 68, 68, 0.2)';
+            statusBox.style.color = '#f87171';
+            statusBox.textContent = '❌ خطا در ارسال: ' + (result.error || 'خطای نامشخص');
+          }
+        } catch(e) {
+          statusBox.style.background = 'rgba(239, 68, 68, 0.2)';
+          statusBox.style.color = '#f87171';
+          statusBox.textContent = '❌ ارتباط با سرور برقرار نشد: ' + e.message;
+        } finally {
+          confirmPublishBtn.disabled = false;
+        }
+      });
 
     // Auto initialize
     fetchTrends();
