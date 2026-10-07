@@ -1226,6 +1226,8 @@
       font-weight: 800;
       color: #fff;
       margin-bottom: 4px;
+      direction: auto;
+      unicode-bidi: plaintext;
     }
     .dossier-subtitle {
       font-size: 12px;
@@ -1456,6 +1458,134 @@
       z-index: 10;
     }
 
+
+    /* --- REDDIT RADAR STYLES --- */
+    .reddit-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255, 69, 0, 0.25);
+      border-radius: 16px;
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .reddit-card:hover {
+      border-color: rgba(255, 69, 0, 0.6);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 69, 0, 0.15);
+    }
+    .reddit-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ff4500, #ff8700);
+      opacity: 0.8;
+    }
+    .reddit-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .reddit-author-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .reddit-sub-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 69, 0, 0.15);
+      border: 1px solid rgba(255, 69, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+    .reddit-sub-name {
+      font-weight: 800;
+      font-size: 14px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .reddit-author-handle {
+      font-size: 11px;
+      color: var(--text-muted);
+      direction: ltr;
+      text-align: right;
+    }
+    .reddit-badges {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-sub {
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .badge-sub-localllama {
+      background: rgba(255, 69, 0, 0.15);
+      color: #ff6535;
+      border: 1px solid rgba(255, 69, 0, 0.3);
+    }
+    .badge-sub-singularity {
+      background: rgba(168, 85, 247, 0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+    .badge-sub-ml {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .reddit-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.5;
+      margin-bottom: 10px;
+      direction: ltr;
+      text-align: left;
+    }
+    .reddit-snippet {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      direction: ltr;
+      text-align: left;
+    }
+    .reddit-metrics {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-subtle);
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .reddit-metric-pill {
+      font-size: 12px;
+      font-weight: 700;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
 </style>
 </head>
 <body>
@@ -1482,6 +1612,10 @@
         <div class="header-stat-pill" style="border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.08);">
           <span>🇮🇷 توییت فارسی:</span>
           <span class="header-stat-val" style="color: #34d399;" id="statTotalFaTweets">۲۱</span>
+        </div>
+        <div class="header-stat-pill" style="border-color: rgba(255, 69, 0, 0.4); background: rgba(255, 69, 0, 0.08);">
+          <span>🔴 ردیت AI:</span>
+          <span class="header-stat-val" style="color: #ff6535;" id="statTotalReddit">۱۶</span>
         </div>
         <div class="header-stat-pill" style="border-color: rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08);">
           <span>🌐 توییت انگلیسی:</span>
@@ -1524,6 +1658,13 @@
       <button class="tab-btn" data-tab="tab-en-tweets">
         <span>🌐 توییت‌های ترند انگلیسی (X)</span>
         <span class="tab-badge" id="badgeEnCount" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa;">۲۹</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-reddit-radar">
+        <span style="display:flex;align-items:center;gap:6px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="#ff4500"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .868.173 1.17.466 1.23-.879 2.923-1.464 4.808-1.527l.957-4.484 3.327.7a1.249 1.249 0 0 1 .966-.657zM8.5 13.5c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zm7 0c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zm-5.548 4.25c-.21.002-.38.173-.379.383 0 .04.01.077.025.114.364.887 1.26 1.48 2.392 1.48 1.133 0 2.029-.593 2.393-1.48.047-.116.03-.247-.044-.347a.384.384 0 0 0-.323-.15h-4.064z"/></svg>
+          🔴 رادار ردیت هوش مصنوعی (Reddit AI)
+        </span>
+        <span class="tab-badge" id="badgeRedditCount" style="background: rgba(255, 69, 0, 0.2); color: #ff6535;">۱۶</span>
       </button>
       <button class="tab-btn" data-tab="tab-thread-studio">
         <span>🧵 استودیو شبیه‌ساز ترد توییتر</span>
@@ -1582,6 +1723,28 @@
 
       <!-- Tweets Grid -->
       <div class="tweets-grid" id="tweetsGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- VIEW: REDDIT AI TRENDS RADAR -->
+    <div id="view-reddit-list" style="display: none;">
+      <div class="control-panel-bar">
+        <div class="search-box-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="searchRedditInput" placeholder="جستجو در تاپیک‌های داغ ردیت هوش مصنوعی، ساب‌ردیت‌ها، نویسنده یا کلیدواژه‌ها...">
+        </div>
+
+        <div class="category-pills" id="redditSubPills">
+          <button class="cat-pill active" data-sub="all">⚡ همه ساب‌ردیت‌ها (<span id="pillRedditAllCount">۱۶</span>)</button>
+          <button class="cat-pill" data-sub="localllama" style="--cat-accent: #ff4500;">🦙 r/LocalLLaMA (مدل‌های محلی)</button>
+          <button class="cat-pill" data-sub="singularity" style="--cat-accent: #a855f7;">🌌 r/singularity (آینده‌پژوهی و AGI)</button>
+          <button class="cat-pill" data-sub="ml_research" style="--cat-accent: #10b981;">🧠 r/MachineLearning (مقالات فنی)</button>
+        </div>
+      </div>
+
+      <!-- Reddit Grid -->
+      <div class="tweets-grid" id="redditGrid">
         <!-- Rendered by JS -->
       </div>
     </div>
@@ -1815,6 +1978,8 @@
           appTweets = data.tweets || [];
           if (document.getElementById('statTotalFaTweets')) document.getElementById('statTotalFaTweets').textContent = data.total_fa || '۲۱';
           if (document.getElementById('statTotalEnTweets')) document.getElementById('statTotalEnTweets').textContent = data.total_en || '۲۹';
+          if (document.getElementById('statTotalReddit')) document.getElementById('statTotalReddit').textContent = data.total_reddit || '۱۶';
+          if (document.getElementById('badgeRedditCount')) document.getElementById('badgeRedditCount').textContent = data.total_reddit || '۱۶';
           if (document.getElementById('badgeFaCount')) document.getElementById('badgeFaCount').textContent = (data.total_fa || '۲۱') + ' توییت';
           if (document.getElementById('badgeEnCount')) document.getElementById('badgeEnCount').textContent = (data.total_en || '۲۹') + ' توییت';
           renderTweetsGrid();
@@ -2084,6 +2249,9 @@
         } else if (tab === 'tab-en-tweets') {
           showView('view-tweets-list');
           fetchTweets('en');
+        } else if (tab === 'tab-reddit-radar') {
+          showView('view-reddit-list');
+          fetchRedditPosts();
         } else if (tab === 'tab-thread-studio') {
           showView('view-thread-studio');
         } else if (tab === 'tab-card-studio') {
@@ -2097,6 +2265,8 @@
       document.getElementById('view-trends-list').style.display = viewId === 'view-trends-list' ? 'block' : 'none';
       const twList = document.getElementById('view-tweets-list');
       if (twList) twList.style.display = viewId === 'view-tweets-list' ? 'block' : 'none';
+      const rdList = document.getElementById('view-reddit-list');
+      if (rdList) rdList.style.display = viewId === 'view-reddit-list' ? 'block' : 'none';
       document.getElementById('view-thread-studio').style.display = viewId === 'view-thread-studio' ? 'block' : 'none';
       document.getElementById('view-card-studio').style.display = viewId === 'view-card-studio' ? 'block' : 'none';
     }
@@ -3164,7 +3334,186 @@ ${playbook.map((p, i) => `${i+1}. ${p}`).join('\n')}
       fetchTweets('all');
 
       fetchTrends();
-  </script>
+      // --- REDDIT RADAR LOGIC ---
+    var appRedditPosts = []; window.appRedditPosts = appRedditPosts;
+    var activeRedditSub = 'all';
+
+    async function fetchRedditPosts() {
+      try {
+        let url = '/trends/api/reddit?sub=' + encodeURIComponent(activeRedditSub);
+        const searchVal = document.getElementById('searchRedditInput')?.value?.trim();
+        if (searchVal) url += '&q=' + encodeURIComponent(searchVal);
+        const res = await fetch(url);
+        const data = await res.json();
+        if (data.status === 'ok') {
+          appRedditPosts = data.posts || [];
+          if (data.total_reddit) {
+            if (document.getElementById('statTotalReddit')) document.getElementById('statTotalReddit').textContent = data.total_reddit;
+            if (document.getElementById('badgeRedditCount')) document.getElementById('badgeRedditCount').textContent = data.total_reddit;
+            if (document.getElementById('pillRedditAllCount')) document.getElementById('pillRedditAllCount').textContent = data.total_reddit;
+          }
+          renderRedditGrid();
+        }
+      } catch (err) {
+        console.error('Error fetching reddit posts:', err);
+      }
+    }
+
+    function renderRedditGrid() {
+      const container = document.getElementById('redditGrid');
+      if (!container) return;
+      const searchVal = (document.getElementById('searchRedditInput')?.value || '').toLowerCase().trim();
+
+      let filtered = appRedditPosts;
+      if (activeRedditSub !== 'all') {
+        filtered = filtered.filter(p => p.category === activeRedditSub || p.subreddit.toLowerCase() === 'r/' + activeRedditSub.toLowerCase());
+      }
+      if (searchVal) {
+        filtered = filtered.filter(p =>
+          (p.title && p.title.toLowerCase().includes(searchVal)) ||
+          (p.snippet && p.snippet.toLowerCase().includes(searchVal)) ||
+          (p.author && p.author.toLowerCase().includes(searchVal)) ||
+          (p.subreddit && p.subreddit.toLowerCase().includes(searchVal))
+        );
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 50px 20px; background: var(--bg-card); border-radius: 14px;">
+            <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
+            <div style="font-size: 15px; font-weight: 700; color: #fff;">مطلبی در ردیت با این مشخصات یافت نشد</div>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      filtered.forEach((post) => {
+        let subBadgeClass = 'badge-sub-localllama';
+        let subIcon = '🦙';
+        if (post.subreddit.includes('singularity')) {
+          subBadgeClass = 'badge-sub-singularity';
+          subIcon = '🌌';
+        } else if (post.subreddit.includes('MachineLearning')) {
+          subBadgeClass = 'badge-sub-ml';
+          subIcon = '🧠';
+        }
+
+        html += `
+          <div class="reddit-card">
+            <div class="reddit-header">
+              <div class="reddit-author-wrap">
+                <div class="reddit-sub-icon">${subIcon}</div>
+                <div>
+                  <div class="reddit-sub-name">
+                    <span>${post.subreddit}</span>
+                  </div>
+                  <div class="reddit-author-handle">u/${post.author}</div>
+                </div>
+              </div>
+              <div class="reddit-badges">
+                <span class="badge-sub ${subBadgeClass}">${post.tag || 'بحث داغ هوش مصنوعی'}</span>
+              </div>
+            </div>
+
+            <div class="reddit-title">
+              ${post.title}
+            </div>
+
+            <div class="reddit-snippet">
+              ${post.snippet}
+            </div>
+
+            <div class="reddit-metrics">
+              <span class="reddit-metric-pill" title="امتیاز / لایک">▲ <span style="color:#ff6535;">${formatNumber(post.score)}</span></span>
+              <span class="reddit-metric-pill" title="نظرات">💬 <span style="color:#cbd5e1;">${formatNumber(post.comments)} نظر</span></span>
+              <span class="reddit-metric-pill" title="نسبت آرای مثبت">👍 <span>${post.upvote_ratio || '95%'}</span></span>
+              <span style="font-size: 11px; font-weight: 800; color: #a855f7; background: rgba(168, 85, 247, 0.12); padding: 2px 7px; border-radius: 10px; border: 1px solid rgba(168, 85, 247, 0.3); margin-right: auto;">🔥 سیگنال قوی</span>
+            </div>
+
+            <div class="tweet-radar-actions">
+              <button class="btn-tweet-to-thread btn-deep-analyze" onclick="openDeepAnalysisModal('reddit', '${post.id}')" title="کالبدشکافی تحلیلی چندبعدی با هوش مصنوعی">
+                <span>🔬 کالبدشکافی AI</span>
+              </button>
+              <button class="btn-tweet-to-thread" onclick="convertRedditToThreadById('${post.id}')" style="background: linear-gradient(135deg, rgba(255, 69, 0, 0.25), rgba(168, 85, 247, 0.35)); border-color: rgba(255, 69, 0, 0.5);">
+                <span>⚡ تبدیل به ترد تحلیلی فارسی</span>
+              </button>
+              <button class="btn-icon-square" onclick="copyTweetTextDirect(${JSON.stringify(post.title).replace(/"/g, '&quot;')})" title="کپی عنوان تاپیک">
+                📋
+              </button>
+              <a href="${post.link}" target="_blank" class="btn-icon-square" title="مشاهده تاپیک در Reddit">
+                🔗
+              </a>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    async function convertRedditToThreadById(postId) {
+      showToast('⏳ در حال تحلیل تاپیک ردیت و ساخت رشته‌توییت و استودیو...');
+      try {
+        const res = await fetch('/trends/api/tweet_to_thread', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ tweet_id: postId, tone: 'viral_hook' })
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          currentThreadData = data;
+          currentTweetsList = [...(data.tweets || [])];
+          currentMidjourneyPrompt = data.midjourney_prompt || '';
+
+          // Switch to thread studio view
+          document.querySelectorAll('.nav-tabs-inner .tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelector('[data-tab="tab-thread-studio"]')?.classList.add('active');
+          showView('view-thread-studio');
+
+          renderThreadOutputs();
+          renderViralCanvas();
+          showToast('🚀 ترد و کاور ۱۶:۹ از تاپیک ردیت با موفقیت ساخته شد!');
+        } else {
+          showToast('❌ خطا در تبدیل ردیت به ترد');
+        }
+      } catch (err) {
+        console.error('Reddit to thread error:', err);
+        showToast('❌ خطا در ارتباط با سرور');
+      }
+    }
+    window.convertRedditToThreadById = convertRedditToThreadById;
+
+    function initRedditListeners() {
+      // Nav tab button
+      document.querySelector('[data-tab="tab-reddit-radar"]')?.addEventListener('click', () => {
+        document.querySelectorAll('.nav-tabs-inner .tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-tab="tab-reddit-radar"]').classList.add('active');
+        showView('view-reddit-list');
+        fetchRedditPosts();
+      });
+
+      // Subreddit pill filters
+      document.querySelectorAll('#redditSubPills .cat-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#redditSubPills .cat-pill').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          activeRedditSub = btn.getAttribute('data-sub') || 'all';
+          fetchRedditPosts();
+        });
+      });
+
+      // Search input
+      document.getElementById('searchRedditInput')?.addEventListener('input', () => {
+        renderRedditGrid();
+      });
+    }
+    
+    // Call initialization
+    initRedditListeners();
+    fetchRedditPosts();
+
+</script>
 
   <!-- MODAL: DEEP INTELLIGENCE DOSSIER -->
   <div class="modal-dossier-overlay" id="modalDeepDossier">

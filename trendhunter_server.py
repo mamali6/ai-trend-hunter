@@ -27,11 +27,239 @@ PORT = 8892
 TWITTER_CONFIG_PATH = "/root/.agent-reach/config.yaml"
 TWITTER_CLI_PATH = "/root/.agent-reach-venv/bin/twitter"
 
+REDDIT_SEED_POSTS = [
+  {
+    "id": "reddit-localllama-mistral4",
+    "subreddit": "r/LocalLLaMA",
+    "title": "Europe rejoins the fight with Chonky! Mistral Large 4 Released, Open weights end of month, who's ready?",
+    "author": "chemist_slime",
+    "author_handle": "/u/chemist_slime",
+    "score": 1420,
+    "comments": 284,
+    "link": "https://www.reddit.com/r/LocalLLaMA/comments/1wzginu/europe_rejoins_the_fight_with_chonky_mistral/",
+    "snippet": "Mistral Large 4 with 1 trillion total parameters and 49B active MoE announced! Open weights coming end of month. Benchmarks indicate matching Claude 3.5 Sonnet on coding and reasoning.",
+    "category": "localllama",
+    "tag": "مدل‌های محلی و اپن‌سورس",
+    "upvote_ratio": "96%"
+  },
+  {
+    "id": "reddit-localllama-looped-transformers",
+    "subreddit": "r/LocalLLaMA",
+    "title": "Microsoft confirms OpenAI has been using Looped Transformers in the GPT-6 / Strawberry series",
+    "author": "ResearchCrafty1804",
+    "author_handle": "/u/ResearchCrafty1804",
+    "score": 2180,
+    "comments": 412,
+    "link": "https://www.reddit.com/r/LocalLLaMA/comments/1wz00vv/microsoft_confirms_openai_has_been_using_looped/",
+    "snippet": "Microsoft documentation publicly confirms recurrence over transformer layers (Looped Transformers) in advanced reasoning models, explaining how recursive thinking depth works in production.",
+    "category": "localllama",
+    "tag": "معماری ترنسفورمر",
+    "upvote_ratio": "98%"
+  },
+  {
+    "id": "reddit-localllama-qwen4",
+    "subreddit": "r/LocalLLaMA",
+    "title": "Qwen 4 apparently coming out at the end of October with 128k native thinking context",
+    "author": "Dependent_Hunter_155",
+    "author_handle": "/u/Dependent_Hunter_155",
+    "score": 1840,
+    "comments": 310,
+    "link": "https://www.reddit.com/r/LocalLLaMA/comments/qwen4_leak/",
+    "snippet": "Alibaba Qwen team preparing Qwen 4 release with native test-time compute scaling and full Apache 2.0 license. Early evaluations show massive leap in math and multi-turn agent benchmarks.",
+    "category": "localllama",
+    "tag": "مدل‌های محلی و اپن‌سورس",
+    "upvote_ratio": "97%"
+  },
+  {
+    "id": "reddit-localllama-embeddinggemma2",
+    "subreddit": "r/LocalLLaMA",
+    "title": "Google DeepMind releases EmbeddingGemma 2: Best-in-class open model for multimodal embeddings",
+    "author": "Recoil42",
+    "author_handle": "/u/Recoil42",
+    "score": 980,
+    "comments": 142,
+    "link": "https://www.reddit.com/r/LocalLLaMA/comments/1wz5va3/googleembeddinggemma2_hugging_face/",
+    "snippet": "Maps text, images, video and code into a unified vector space natively on consumer GPUs. RAG pipelines can now perform semantic image-to-code and video retrieval without separate vision encoders.",
+    "category": "localllama",
+    "tag": "امبدینگ و وکتور RAG",
+    "upvote_ratio": "95%"
+  },
+  {
+    "id": "reddit-localllama-cagliostro",
+    "subreddit": "r/LocalLLaMA",
+    "title": "BenchLabs' Cagliostro V3.5 135M takes #1 spot on Open SLM Leaderboard with 27.49 Intelligence Index",
+    "author": "Megneous",
+    "author_handle": "/u/Megneous",
+    "score": 1150,
+    "comments": 185,
+    "link": "https://www.reddit.com/r/LocalLLaMA/comments/slm_leaderboard_135m/",
+    "snippet": "A tiny 135M parameter Small Language Model outperforming SmolLM2 and Llama-1B in edge reasoning tasks, running at over 450 tokens/sec on mobile phones and microcontrollers.",
+    "category": "localllama",
+    "tag": "مدل‌های فوق‌سبک SLM",
+    "upvote_ratio": "94%"
+  },
+  {
+    "id": "reddit-localllama-vram-mining",
+    "subreddit": "r/LocalLLaMA",
+    "title": "54GB VRAM for 35$: Repurposing decommissioned mining rigs for 70B local LLM inference",
+    "author": "markpronkin",
+    "author_handle": "/u/markpronkin",
+    "score": 3410,
+    "comments": 520,
+    "link": "https://www.reddit.com/r/LocalLLaMA/comments/1wz6ist/54gb_vram_for_35/",
+    "snippet": "Hardware walkthrough on combining cheap P106/CMP mining cards over PCIe risers with llama.cpp tensor splitting, achieving 32 t/s on DeepSeek-Coder 33B at nearly zero cost.",
+    "category": "localllama",
+    "tag": "سخت‌افزار و هاستینگ محلی",
+    "upvote_ratio": "99%"
+  },
+  {
+    "id": "reddit-localllama-abliterated-risks",
+    "subreddit": "r/LocalLLaMA",
+    "title": "How abliterated models can get you pwned: Orthogonal direction pruning removes security heuristics",
+    "author": "Thrumpwart",
+    "author_handle": "/u/Thrumpwart",
+    "score": 1620,
+    "comments": 260,
+    "link": "https://www.reddit.com/r/LocalLLaMA/comments/abliterated_weights_exploit/",
+    "snippet": "In-depth red-team research demonstrating that removing safety vectors via representation engineering also strips the model's resistance to indirect prompt injection and malicious payload execution.",
+    "category": "localllama",
+    "tag": "امنیت و ردتیم هوش مصنوعی",
+    "upvote_ratio": "96%"
+  },
+  {
+    "id": "reddit-localllama-claude-diary",
+    "subreddit": "r/LocalLLaMA",
+    "title": "User logged intimate daily thoughts to Claude - triggered automated policy escalation to local authorities",
+    "author": "Timely_Impression_92",
+    "author_handle": "/u/Timely_Impression_92",
+    "score": 4890,
+    "comments": 1140,
+    "link": "https://www.reddit.com/r/LocalLLaMA/comments/1wz5b30/woman_used_claude_as_her_diary_and_got_reported/",
+    "snippet": "Massive discussion on cloud LLM privacy boundaries, mandatory reporting triggers, and why personal sensitive data and journaling belong strictly on local open-weight models like LLaMA and Mistral.",
+    "category": "localllama",
+    "tag": "حریم خصوصی و دیتای محلی",
+    "upvote_ratio": "97%"
+  },
+  {
+    "id": "reddit-singularity-openai-anthropic-duopoly",
+    "subreddit": "r/singularity",
+    "title": "OpenAI and Anthropic unite against open-weight AI risks to protect corporate bottom lines",
+    "author": "cyber_prophet",
+    "author_handle": "/u/cyber_prophet",
+    "score": 3820,
+    "comments": 740,
+    "link": "https://www.reddit.com/r/singularity/comments/1v4d878/openai_and_anthropic_unite_against_openweight_ai/",
+    "snippet": "Axios leak exposes closed-source labs lobbying Washington regulators to impose mandatory compute licensing and restrict open weights under the guise of national security.",
+    "category": "singularity",
+    "tag": "سیاست‌گذاری و لابی هوش مصنوعی",
+    "upvote_ratio": "93%"
+  },
+  {
+    "id": "reddit-singularity-both-sides",
+    "subreddit": "r/singularity",
+    "title": "Every major AI player is now publicly playing both sides: Altman, Amodei & Hassabis analyzed",
+    "author": "NeoSingular",
+    "author_handle": "/u/NeoSingular",
+    "score": 2740,
+    "comments": 490,
+    "link": "https://www.reddit.com/r/singularity/comments/1v9rbn0/every_major_ai_player_is_now_publicly_on_both/",
+    "snippet": "Sam Altman signed open-weight defense letters while lobbying against them; Amodei calls open source a 'red herring' while claiming Anthropic doesn't want a ban; Hassabis pushes industry oversight boards.",
+    "category": "singularity",
+    "tag": "بازیگران پیشتاز هوش مصنوعی",
+    "upvote_ratio": "95%"
+  },
+  {
+    "id": "reddit-singularity-david-sacks",
+    "subreddit": "r/singularity",
+    "title": "David Sacks calls Anthropic and OpenAI a duopoly attempting regulatory capture against open source",
+    "author": "TechFreedomNow",
+    "author_handle": "/u/TechFreedomNow",
+    "score": 3150,
+    "comments": 610,
+    "link": "https://www.reddit.com/r/singularity/comments/1v0sxo1/david_sacks_calls_anthropic_and_openai_a_duopoly/",
+    "snippet": "Tech leaders fight back against Dean Ball's FUD strategy aimed at scaring enterprise customers away from open weights like DeepSeek and Kimi through administrative soft-law warnings.",
+    "category": "singularity",
+    "tag": "تنظیم‌گری و رگولاتوری",
+    "upvote_ratio": "94%"
+  },
+  {
+    "id": "reddit-singularity-pentagon-redlines",
+    "subreddit": "r/singularity",
+    "title": "Sam Altman confirms OpenAI shares Anthropic's red lines in Pentagon autonomous weapons fight",
+    "author": "FuturistWatcher",
+    "author_handle": "/u/FuturistWatcher",
+    "score": 2290,
+    "comments": 380,
+    "link": "https://www.reddit.com/r/singularity/comments/1rga4qt/sam_altman_says_openai_shares_anthropics_red/",
+    "snippet": "Department of Defense negotiations hit deadlock as AI frontier labs insist on strict cryptographic safeguards preventing automated battlefield lethality and mass surveillance.",
+    "category": "singularity",
+    "tag": "کاربردهای نظامی و اخلاق AI",
+    "upvote_ratio": "92%"
+  },
+  {
+    "id": "reddit-ml-tahuna-infra",
+    "subreddit": "r/MachineLearning",
+    "title": "Pacing the Frontier – Tahuna: Distributed AI Training Infrastructure, Now Open Source [P]",
+    "author": "Monaim101",
+    "author_handle": "/u/Monaim101",
+    "score": 1390,
+    "comments": 195,
+    "link": "https://www.reddit.com/r/MachineLearning/comments/1wfnbap",
+    "snippet": "Tahuna Labs open-sources autonomous experimentation and multi-GPU cluster orchestration framework, enabling small teams to run RL agentic search, SFT, and self-hosted model improvements.",
+    "category": "ml_research",
+    "tag": "زیرساخت آموزش و تراست",
+    "upvote_ratio": "97%"
+  },
+  {
+    "id": "reddit-ml-bedrock-ama",
+    "subreddit": "r/MachineLearning",
+    "title": "AMA with Principal Applied Scientist at AWS: Agent Evaluation, Conversation Simulation & Proactive AI [D]",
+    "author": "JamesGung_AWS",
+    "author_handle": "/u/JamesGung_AWS",
+    "score": 1820,
+    "comments": 340,
+    "link": "https://www.reddit.com/r/MachineLearning/comments/1wjtxp8",
+    "snippet": "Technical insights on evaluating autonomous agents in enterprise pipelines, multi-agent conversation simulation, and solving latency bottlenecks in large RAG architectures.",
+    "category": "ml_research",
+    "tag": "معماری ایجنت‌های سازمانی",
+    "upvote_ratio": "96%"
+  },
+  {
+    "id": "reddit-ml-deepseek-moe",
+    "subreddit": "r/MachineLearning",
+    "title": "DeepSeek-V3 MoE Architecture Deep-Dive: 671B Total Parameters with 37B Active per Token [R]",
+    "author": "QuantizedMind",
+    "author_handle": "/u/QuantizedMind",
+    "score": 2980,
+    "comments": 460,
+    "link": "https://www.reddit.com/r/MachineLearning/comments/deepseek_v3_moe_paper/",
+    "snippet": "Rigorous breakdown of Multi-head Latent Attention (MLA), DeepSeekMoE architecture, and FP8 mixed precision training on custom clusters, achieving parity with frontier closed models.",
+    "category": "ml_research",
+    "tag": "کالبدشکافی مقالات تحقیقاتی",
+    "upvote_ratio": "98%"
+  },
+  {
+    "id": "reddit-ml-diffusion-forcing",
+    "subreddit": "r/MachineLearning",
+    "title": "Diffusion Forcing for Next-Token Prediction: Continuous-time generation beating autoregressive transformers [R]",
+    "author": "NeuroVector",
+    "author_handle": "/u/NeuroVector",
+    "score": 1640,
+    "comments": 220,
+    "link": "https://www.reddit.com/r/MachineLearning/comments/diffusion_forcing_arxiv/",
+    "snippet": "Combining sequence modeling with diffusion decoders allows parallel planning and non-causal correction during inference, fixing common failure modes in long-horizon code synthesis.",
+    "category": "ml_research",
+    "tag": "نوآوری الگوریتمی",
+    "upvote_ratio": "95%"
+  }
+]
+
 cache = {
     "trends": [],
     "tweets_fa": [],
     "tweets_en": [],
     "all_tweets": [],
+    "reddit_posts": list(REDDIT_SEED_POSTS),
     "last_update": 0,
     "stats": {},
     "lock": threading.Lock()
@@ -874,6 +1102,39 @@ class TrendHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
 
+        elif path in ["/api/reddit", "/reddit"]:
+            with cache["lock"]:
+                reddit_posts = list(cache.get("reddit_posts", []))
+                stats = dict(cache.get("stats", {}))
+
+            sub = query.get("sub", ["all"])[0]
+            cat = query.get("category", ["all"])[0]
+            q = query.get("q", [""])[0].lower()
+
+            selected = list(reddit_posts)
+            if sub != "all":
+                selected = [p for p in selected if p.get("subreddit", "").lower() == f"r/{sub}".lower() or p.get("category") == sub]
+            if cat != "all":
+                selected = [p for p in selected if p.get("category") == cat]
+            if q:
+                selected = [p for p in selected if q in p.get("title", "").lower() or q in p.get("snippet", "").lower()]
+
+            payload = {
+                "status": "ok",
+                "count": len(selected),
+                "total_reddit": len(reddit_posts),
+                "stats": stats,
+                "posts": selected
+            }
+            body = json.dumps(payload, ensure_ascii=False).encode('utf-8')
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_cors_headers()
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
+
         elif path in ["/api/analyze", "/analyze"]:
             payload = {"status": "ok", "message": "Deep Intelligence Analysis Engine v4.0 active. Use POST to trigger full autopsy."}
             body = json.dumps(payload, ensure_ascii=False).encode('utf-8')
@@ -1018,13 +1279,35 @@ class TrendHandler(http.server.BaseHTTPRequestHandler):
             except Exception:
                 data = {}
 
+            tweet_id = data.get("tweet_id")
             tweet_text = data.get("tweet_text", "").strip()
             author_name = data.get("author_name", "اکوسیستم توییتر").strip()
             author_handle = data.get("author_handle", "").strip()
             lang = data.get("lang", "en")
             tone = data.get("tone", "viral_hook")
+            source = f"توییتر / X (@{author_handle})"
 
-            title = f"تحلیل ترند: توییت {author_name}"
+            if tweet_id:
+                with cache["lock"]:
+                    matched = [t for t in cache["all_tweets"] if t.get("id") == tweet_id]
+                    if not matched:
+                        matched = [p for p in cache.get("reddit_posts", []) if p.get("id") == tweet_id]
+                        if matched:
+                            item = matched[0]
+                            tweet_text = item.get("snippet", item.get("title", ""))
+                            author_name = item.get("author", "کاربر ردیت")
+                            author_handle = item.get("author_handle", f"/u/{author_name}")
+                            source = f"Reddit ({item.get('subreddit')})"
+                            title = f"تحلیل ترند ردیت: {item.get('title')}"
+                    elif matched:
+                        item = matched[0]
+                        tweet_text = item.get("text", tweet_text)
+                        author_name = item.get("author", author_name)
+                        author_handle = item.get("author_handle", author_handle)
+                        source = f"توییتر / X (@{author_handle})"
+
+            if not tweet_id or not matched:
+                title = f"تحلیل ترند: {author_name}"
             summary = f"بررسی بینش مطرح‌شده توسط {author_name} (@{author_handle}):\n«{tweet_text}»\nاین دیدگاه بازتاب گسترده‌ای در جامعه فناوری داشته و چالش‌های جدی سیستم‌های فعلی را هدف گرفته است."
             tags = ["ترند_توییتر", "تحلیل_فناوری", author_handle.replace("_", "") if author_handle else "توییتر", "هوش_مصنوعی"]
             source = f"توییتر / X (@{author_handle})"
@@ -1045,6 +1328,39 @@ class TrendHandler(http.server.BaseHTTPRequestHandler):
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
             self.wfile.write(body)
+
+        elif path in ["/api/reddit", "/reddit"]:
+            with cache["lock"]:
+                reddit_posts = list(cache.get("reddit_posts", []))
+                stats = dict(cache.get("stats", {}))
+
+            sub = query.get("sub", ["all"])[0]
+            cat = query.get("category", ["all"])[0]
+            q = query.get("q", [""])[0].lower()
+
+            selected = list(reddit_posts)
+            if sub != "all":
+                selected = [p for p in selected if p.get("subreddit", "").lower() == f"r/{sub}".lower() or p.get("category") == sub]
+            if cat != "all":
+                selected = [p for p in selected if p.get("category") == cat]
+            if q:
+                selected = [p for p in selected if q in p.get("title", "").lower() or q in p.get("snippet", "").lower()]
+
+            payload = {
+                "status": "ok",
+                "count": len(selected),
+                "total_reddit": len(reddit_posts),
+                "stats": stats,
+                "posts": selected
+            }
+            body = json.dumps(payload, ensure_ascii=False).encode('utf-8')
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_cors_headers()
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
 
         elif path in ["/api/analyze", "/analyze"]:
             content_len = int(self.headers.get('Content-Length', 0))
@@ -1074,6 +1390,16 @@ class TrendHandler(http.server.BaseHTTPRequestHandler):
                         source = item.get("source", source)
                         category = item.get("category", "AI")
                         author = item.get("author", "جامعه هوش مصنوعی")
+            elif item_type == "reddit" and item_id:
+                with cache["lock"]:
+                    matched = [p for p in cache.get("reddit_posts", []) if p.get("id") == item_id]
+                    if matched:
+                        target_item = matched[0]
+                        title = target_item.get("title", "Reddit AI Post")
+                        summary = target_item.get("snippet", "")
+                        source = f"Reddit ({target_item.get('subreddit')})"
+                        author = target_item.get("author_handle", target_item.get("author"))
+                        category = "reddit"
             elif item_type == "tweet" and item_id:
                 with cache["lock"]:
                     matched = [t for t in cache.get("tweets", []) if t.get("id") == item_id]
@@ -1153,6 +1479,7 @@ def main():
             "total_fa_tweets": len(fa_s),
             "total_en_tweets": len(en_s),
             "total_all_tweets": len(fa_s) + len(en_s),
+            "total_reddit": len(REDDIT_SEED_POSTS),
             "categories": {"all": len(flagships), "llm": 2, "tools": 1, "vision": 1, "opensource": 1},
             "updated_at": time.strftime("%Y-%m-%d %H:%M:%S")
         }
