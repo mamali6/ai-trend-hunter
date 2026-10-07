@@ -924,6 +924,210 @@
       to { opacity: 1; transform: scale(1); }
     }
 
+
+    /* Twitter Radar Cards Grid */
+    .tweets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+      .tweets-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .tweet-radar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    .tweet-radar-card:hover {
+      border-color: rgba(29, 155, 240, 0.45);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(29, 155, 240, 0.15);
+    }
+    .tweet-radar-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; left: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(29, 155, 240, 0.6), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+    .tweet-radar-card:hover::before {
+      opacity: 1;
+    }
+    .tweet-radar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+    .tweet-radar-author-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tweet-radar-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(29, 155, 240, 0.4);
+      object-fit: cover;
+      background: #1e293b;
+    }
+    .tweet-radar-author-meta {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.25;
+    }
+    .tweet-radar-author-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .tweet-radar-handle {
+      font-size: 12px;
+      color: #94a3b8;
+      font-family: monospace;
+      direction: ltr;
+      text-align: left;
+    }
+    .tweet-radar-badges {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+    .badge-lang-fa {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .badge-lang-en {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      color: #60a5fa;
+      font-size: 10.5px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .badge-category-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 10px;
+    }
+    .tweet-radar-body {
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: #e2e8f0;
+      margin-bottom: 14px;
+      word-break: break-word;
+    }
+    .tweet-body-fa {
+      direction: rtl;
+      text-align: right;
+      font-family: "Vazirmatn", sans-serif;
+    }
+    .tweet-body-en {
+      direction: ltr;
+      text-align: left;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .tweet-radar-metrics {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 14px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .metric-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .metric-val {
+      font-weight: 700;
+      color: #cbd5e1;
+    }
+    .tweet-radar-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .btn-tweet-to-thread {
+      flex: 1;
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(6, 182, 212, 0.25));
+      border: 1px solid rgba(168, 85, 247, 0.45);
+      color: #ffffff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .btn-tweet-to-thread:hover {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.45), rgba(6, 182, 212, 0.45));
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 14px rgba(168, 85, 247, 0.35);
+      transform: translateY(-1px);
+    }
+    .btn-icon-square {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #cbd5e1;
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .btn-icon-square:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
 </style>
 </head>
 <body>
@@ -945,19 +1149,19 @@
       <div class="header-stats-wrap">
         <div class="header-stat-pill">
           <span>📊 مجموع ترندها:</span>
-          <span class="header-stat-val" id="statTotalTrends">۴۰</span>
+          <span class="header-stat-val" id="statTotalTrends">۵۰</span>
+        </div>
+        <div class="header-stat-pill" style="border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.08);">
+          <span>🇮🇷 توییت فارسی:</span>
+          <span class="header-stat-val" style="color: #34d399;" id="statTotalFaTweets">۲۱</span>
+        </div>
+        <div class="header-stat-pill" style="border-color: rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.08);">
+          <span>🌐 توییت انگلیسی:</span>
+          <span class="header-stat-val" style="color: #60a5fa;" id="statTotalEnTweets">۲۹</span>
         </div>
         <div class="header-stat-pill">
-          <span>🤗 مقالات HF:</span>
-          <span class="header-stat-val" id="statTotalPapers">۱۵</span>
-        </div>
-        <div class="header-stat-pill">
-          <span>🐙 ریپازیتوری‌ها:</span>
-          <span class="header-stat-val" id="statTotalRepos">۱۴</span>
-        </div>
-        <div class="header-stat-pill">
-          <span>🔥 میانگین وایرال:</span>
-          <span class="header-stat-val" style="color: #f59e0b;" id="statAvgVirality">۸۵/۱۰۰</span>
+          <span>🔥 شاخص وایرال:</span>
+          <span class="header-stat-val" style="color: #f59e0b;" id="statAvgVirality">۹۴/۱۰۰</span>
         </div>
       </div>
 
@@ -982,20 +1186,20 @@
   <nav class="nav-tabs-bar">
     <div class="nav-tabs-inner">
       <button class="tab-btn active" data-tab="tab-all-trends">
-        <span>🔥 رادار جامع ترندها</span>
-        <span class="tab-badge" id="badgeAllCount">۴۰</span>
+        <span>🔥 رادار مقالات و مدل‌های AI</span>
+        <span class="tab-badge" id="badgeAllCount">۲۵</span>
       </button>
-      <button class="tab-btn" data-tab="tab-papers">
-        <span>🤗 مقالات دیلی پیپرز (HF)</span>
-        <span class="tab-badge" id="badgePapersCount">۱۵</span>
+      <button class="tab-btn" data-tab="tab-fa-tweets">
+        <span>🇮🇷 توییت‌های ترند فارسی (X)</span>
+        <span class="tab-badge" id="badgeFaCount" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">۲۱</span>
       </button>
-      <button class="tab-btn" data-tab="tab-repos">
-        <span>🐙 ریپازیتوری‌های داغ گیت‌هاب</span>
-        <span class="tab-badge" id="badgeReposCount">۱۴</span>
+      <button class="tab-btn" data-tab="tab-en-tweets">
+        <span>🌐 توییت‌های ترند انگلیسی (X)</span>
+        <span class="tab-badge" id="badgeEnCount" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa;">۲۹</span>
       </button>
       <button class="tab-btn" data-tab="tab-thread-studio">
         <span>🧵 استودیو شبیه‌ساز ترد توییتر</span>
-        <span class="tab-badge">۷ توییت</span>
+        <span class="tab-badge">۶ توییت</span>
       </button>
       <button class="tab-btn" data-tab="tab-card-studio">
         <span>📸 استودیو کارت‌ساز تصویری</span>
@@ -1026,6 +1230,30 @@
 
       <!-- Trends Cards Grid -->
       <div class="trends-grid" id="trendsGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    
+    <!-- VIEW: TWITTER / X TRENDS RADAR (PERSIAN & ENGLISH) -->
+    <div id="view-tweets-list" style="display: none;">
+      <div class="control-panel-bar">
+        <div class="search-box-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="search-input" id="searchTweetsInput" placeholder="جستجو در توییت‌های فارسی و انگلیسی، نام نویسنده یا هندل (@karpathy, @jadi)...">
+        </div>
+
+        <div class="category-pills" id="tweetsCatPills">
+          <button class="cat-pill active" data-tw-cat="all">همه موضوعات</button>
+          <button class="cat-pill" data-tw-cat="ai">🤖 هوش مصنوعی و مدل‌ها</button>
+          <button class="cat-pill" data-tw-cat="dev">💻 برنامه‌نویسی و نرم‌افزار</button>
+          <button class="cat-pill" data-tw-cat="crypto">⚡ وب۳ و کریپتو</button>
+          <button class="cat-pill" data-tw-sort="likes">🔥 داغ‌ترین‌ها بر اساس لایک</button>
+        </div>
+      </div>
+
+      <!-- Tweets Grid -->
+      <div class="tweets-grid" id="tweetsGrid">
         <!-- Rendered by JS -->
       </div>
     </div>
@@ -1216,6 +1444,172 @@
     let currentThreadData = null;
     let selectedTrendForThread = null;
 
+
+    // --- TWEETS STATE & LOGIC ---
+    let appTweets = [];
+    let activeTweetLang = 'all';
+    let activeTweetCat = 'all';
+    let activeTweetSort = 'viral';
+
+    async function fetchTweets(lang = 'all') {
+      try {
+        activeTweetLang = lang;
+        const res = await fetch(`/trends/api/tweets?lang=${lang}&sort=${activeTweetSort}`);
+        const data = await res.json();
+        if (data.status === 'ok') {
+          appTweets = data.tweets || [];
+          if (document.getElementById('statTotalFaTweets')) document.getElementById('statTotalFaTweets').textContent = data.total_fa || '۲۱';
+          if (document.getElementById('statTotalEnTweets')) document.getElementById('statTotalEnTweets').textContent = data.total_en || '۲۹';
+          if (document.getElementById('badgeFaCount')) document.getElementById('badgeFaCount').textContent = (data.total_fa || '۲۱') + ' توییت';
+          if (document.getElementById('badgeEnCount')) document.getElementById('badgeEnCount').textContent = (data.total_en || '۲۹') + ' توییت';
+          renderTweetsGrid();
+        }
+      } catch (err) {
+        console.error('Error fetching tweets:', err);
+      }
+    }
+
+    function formatNumber(num) {
+      if (!num || isNaN(num)) return '۰';
+      if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+      if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+      return Number(num).toLocaleString('fa-IR');
+    }
+
+    function renderTweetsGrid() {
+      const container = document.getElementById('tweetsGrid');
+      if (!container) return;
+      const searchVal = (document.getElementById('searchTweetsInput')?.value || '').toLowerCase().trim();
+
+      let filtered = appTweets;
+      if (activeTweetCat !== 'all') {
+        filtered = filtered.filter(t => t.category === activeTweetCat);
+      }
+      if (searchVal) {
+        filtered = filtered.filter(t => 
+          (t.text && t.text.toLowerCase().includes(searchVal)) ||
+          (t.author_name && t.author_name.toLowerCase().includes(searchVal)) ||
+          (t.author_handle && t.author_handle.toLowerCase().includes(searchVal))
+        );
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 50px 20px; background: var(--bg-card); border-radius: 14px;">
+            <div style="font-size: 32px; margin-bottom: 8px;">🔍</div>
+            <div style="font-size: 15px; font-weight: 700; color: #fff;">توییتی با این مشخصات یافت نشد</div>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      filtered.forEach((tw, idx) => {
+        const isFa = (tw.lang === 'fa');
+        const langBadge = isFa 
+          ? '<span class="badge-lang-fa">🇮🇷 ترند فارسی</span>'
+          : '<span class="badge-lang-en">🌐 ترند انگلیسی</span>';
+        
+        let catLabel = '💡 فناوری';
+        if (tw.category === 'ai') catLabel = '🤖 هوش مصنوعی';
+        else if (tw.category === 'dev') catLabel = '💻 برنامه‌نویسی';
+        else if (tw.category === 'crypto') catLabel = '⚡ وب۳ و کریپتو';
+
+        const bodyClass = isFa ? 'tweet-body-fa' : 'tweet-body-en';
+        const viralityBadge = `<span style="font-size: 11px; font-weight: 800; color: #f59e0b; background: rgba(245, 158, 11, 0.12); padding: 2px 7px; border-radius: 10px; border: 1px solid rgba(245, 158, 11, 0.3);">🔥 ${tw.virality_score}٪ وایرال</span>`;
+
+        html += `
+          <div class="tweet-radar-card">
+            <div class="tweet-radar-header">
+              <div class="tweet-radar-author-wrap">
+                <img src="${tw.author_avatar}" class="tweet-radar-avatar" alt="${tw.author_name}" onerror="this.src='https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png'">
+                <div class="tweet-radar-author-meta">
+                  <div class="tweet-radar-author-name">
+                    <span>${tw.author_name}</span>
+                    ${tw.author_verified ? '<span style="color:#1d9bf0;">☑️</span>' : ''}
+                  </div>
+                  <div class="tweet-radar-handle">@${tw.author_handle}</div>
+                </div>
+              </div>
+              <div class="tweet-radar-badges">
+                ${langBadge}
+                <span class="badge-category-pill">${catLabel}</span>
+              </div>
+            </div>
+
+            <div class="tweet-radar-body ${bodyClass}">
+              ${tw.text}
+            </div>
+
+            <div class="tweet-radar-metrics">
+              <span class="metric-item" title="لایک">❤️ <span class="metric-val">${formatNumber(tw.likes)}</span></span>
+              <span class="metric-item" title="ریتویت">🔁 <span class="metric-val">${formatNumber(tw.retweets)}</span></span>
+              <span class="metric-item" title="پاسخ">💬 <span class="metric-val">${formatNumber(tw.replies)}</span></span>
+              <span class="metric-item" title="بازدید">👁️ <span class="metric-val">${formatNumber(tw.views)}</span></span>
+              ${viralityBadge}
+            </div>
+
+            <div class="tweet-radar-actions">
+              <button class="btn-tweet-to-thread" onclick="convertTweetToThreadById('${tw.id}')">
+                <span>⚡ تبدیل به ترد تحلیلی فارسی</span>
+              </button>
+              <button class="btn-icon-square" onclick="copyTweetTextDirect(${JSON.stringify(tw.text).replace(/"/g, '&quot;')})" title="کپی متن توییت">
+                📋
+              </button>
+              <a href="${tw.url}" target="_blank" class="btn-icon-square" title="مشاهده در X.com">
+                🔗
+              </a>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function copyTweetTextDirect(text) {
+      navigator.clipboard.writeText(text);
+      showToast('✅ متن توییت در کلیپ‌بورد کپی شد!');
+    }
+
+    async function convertTweetToThreadById(tweetId) {
+      const tw = appTweets.find(t => t.id === tweetId);
+      if (!tw) return;
+      showToast('⏳ در حال استخراج بینش و معماریکردن ترد با AI...');
+
+      try {
+        const res = await fetch('/trends/api/tweet_to_thread', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            tweet_text: tw.text,
+            author_name: tw.author_name,
+            author_handle: tw.author_handle,
+            lang: tw.lang
+          })
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          currentThreadData = data;
+          currentTweetsList = [...(data.tweets || [])];
+          currentMidjourneyPrompt = data.midjourney_prompt || '';
+
+          // Switch to thread studio view
+          document.querySelectorAll('.nav-tabs-inner .tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelector('[data-tab="tab-thread-studio"]')?.classList.add('active');
+          showView('view-thread-studio');
+
+          renderThreadOutputs();
+          renderViralCanvas();
+
+          showToast('🎉 رشته‌توییت تحلیلی فارسی با موفقیت تولید شد!');
+        }
+      } catch (e) {
+        showToast('❌ خطا در ارتباط با سرور: ' + e.message);
+      }
+    }
+
+
     // --- FETCH DATA ---
     async function fetchTrends() {
       try {
@@ -1323,16 +1717,12 @@
           updateCatPills('all');
           showView('view-trends-list');
           renderTrendsGrid();
-        } else if (tab === 'tab-papers') {
-          activeCategory = 'papers';
-          updateCatPills('papers');
-          showView('view-trends-list');
-          renderTrendsGrid();
-        } else if (tab === 'tab-repos') {
-          activeCategory = 'repos';
-          updateCatPills('repos');
-          showView('view-trends-list');
-          renderTrendsGrid();
+        } else if (tab === 'tab-fa-tweets') {
+          showView('view-tweets-list');
+          fetchTweets('fa');
+        } else if (tab === 'tab-en-tweets') {
+          showView('view-tweets-list');
+          fetchTweets('en');
         } else if (tab === 'tab-thread-studio') {
           showView('view-thread-studio');
         } else if (tab === 'tab-card-studio') {
@@ -1344,6 +1734,8 @@
 
     function showView(viewId) {
       document.getElementById('view-trends-list').style.display = viewId === 'view-trends-list' ? 'block' : 'none';
+      const twList = document.getElementById('view-tweets-list');
+      if (twList) twList.style.display = viewId === 'view-tweets-list' ? 'block' : 'none';
       document.getElementById('view-thread-studio').style.display = viewId === 'view-thread-studio' ? 'block' : 'none';
       document.getElementById('view-card-studio').style.display = viewId === 'view-card-studio' ? 'block' : 'none';
     }
@@ -2047,7 +2439,31 @@
       });
 
     // Auto initialize
-    fetchTrends();
+    
+      // Twitter Trends Category & Sort Listeners
+      document.querySelectorAll('#tweetsCatPills .cat-pill').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#tweetsCatPills .cat-pill').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const cat = btn.getAttribute('data-tw-cat');
+          const sort = btn.getAttribute('data-tw-sort');
+          if (cat) {
+            activeTweetCat = cat;
+            activeTweetSort = 'viral';
+          } else if (sort) {
+            activeTweetSort = sort;
+            activeTweetCat = 'all';
+          }
+          fetchTweets(activeTweetLang);
+        });
+      });
+
+      document.getElementById('searchTweetsInput')?.addEventListener('input', renderTweetsGrid);
+
+      // Pre-fetch tweets in background
+      fetchTweets('all');
+
+      fetchTrends();
   </script>
 </body>
 </html>

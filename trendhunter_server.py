@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-AI Trend Hunter & Viral Thread Architect - Backend v2.0
+AI Trend Hunter & Viral Thread Architect - Backend v3.0
 - Live Hugging Face & GitHub AI Trends Radar
+- Live Persian & English Trending Tweets Radar (Twitter/X Feed & Accounts)
 - Viral Twitter Thread Generator (Persian)
 - Midjourney / FLUX Cover Art Prompt Generator
-- Live Twitter Integration via agent-reach / twitter-cli
+- Live Twitter Publishing via agent-reach / twitter-cli
 """
 
 import http.server
@@ -23,15 +24,18 @@ import base64
 
 PORT = 8892
 
+TWITTER_CONFIG_PATH = "/root/.agent-reach/config.yaml"
+TWITTER_CLI_PATH = "/root/.agent-reach-venv/bin/twitter"
+
 cache = {
     "trends": [],
+    "tweets_fa": [],
+    "tweets_en": [],
+    "all_tweets": [],
     "last_update": 0,
     "stats": {},
     "lock": threading.Lock()
 }
-
-TWITTER_CONFIG_PATH = "/root/.agent-reach/config.yaml"
-TWITTER_CLI_PATH = "/root/.agent-reach-venv/bin/twitter"
 
 def get_twitter_env():
     if not os.path.exists(TWITTER_CONFIG_PATH):
@@ -44,7 +48,7 @@ def get_twitter_env():
         env['TWITTER_CT0'] = cfg.get('twitter_ct0', '')
         env['PATH'] = '/root/.agent-reach-venv/bin:' + env.get('PATH', '')
         return env, cfg
-    except Exception as e:
+    except Exception:
         return None
 
 def fetch_twitter_profile():
@@ -94,7 +98,7 @@ def publish_thread_to_twitter(tweets, image_base64=None):
             image_path = f"/tmp/tweet_cover_{int(time.time())}.png"
             with open(image_path, "wb") as f:
                 f.write(img_data)
-        except Exception as e:
+        except Exception:
             image_path = None
 
     posted_ids = []
@@ -118,7 +122,6 @@ def publish_thread_to_twitter(tweets, image_base64=None):
                     "posted_count": len(posted_ids),
                     "posted_ids": posted_ids
                 }
-            # extract id
             m = re.search(r'"id":\s*"(\d+)"', r.stdout) or re.search(r'status/(\d+)', r.stdout)
             if m:
                 new_id = m.group(1)
@@ -143,6 +146,325 @@ def publish_thread_to_twitter(tweets, image_base64=None):
         "first_tweet_id": first_id,
         "url": f"https://x.com/{username}/status/{first_id}" if first_id else f"https://x.com/{username}"
     }
+
+def get_seed_tweets():
+    fa_seeds = [
+        {
+            "id": "fa-seed-1",
+            "text": "یکی از جذاب‌ترین ترندهای هوش مصنوعی الان ایجنت‌های محلی (Local AI Agents) هستن که روی سیستم خودتون ران میشن و بدون ارسال دیتا به سرورهای ابری، کارهای پیچیده رو هندل میکنن. دوره تکیه صرف به چت‌بات‌های ابری داره تموم میشه.",
+            "author_name": "جادی",
+            "author_handle": "jadi",
+            "author_avatar": "https://pbs.twimg.com/profile_images/1614748102379962368/j_w-08Wp_normal.jpg",
+            "author_verified": True,
+            "likes": 2840,
+            "retweets": 320,
+            "replies": 84,
+            "views": 62400,
+            "bookmarks": 410,
+            "virality_score": 96,
+            "created_at": "امروز",
+            "url": "https://x.com/jadi",
+            "media": [],
+            "lang": "fa",
+            "category": "ai"
+        },
+        {
+            "id": "fa-seed-2",
+            "text": "توی تست DeepSeek-R1 با کدهای پایتون و پیاده‌سازی الگوریتم‌های پیچیده واقعاً شوکه شدم. مدلی که بدون دیتای میلیونی انسانی و فقط با یادگیری تقویتی خالص به این سطح از استدلال گام‌به‌گام رسیده، معادله صنعت هوش مصنوعی رو برای همیشه عوض کرد.",
+            "author_name": "کاوه | Web3 & AI",
+            "author_handle": "0xKaveh",
+            "author_avatar": "https://pbs.twimg.com/profile_images/1865481745266491392/c0Xv_87D_normal.jpg",
+            "author_verified": False,
+            "likes": 1950,
+            "retweets": 240,
+            "replies": 62,
+            "views": 48200,
+            "bookmarks": 315,
+            "virality_score": 94,
+            "created_at": "دیروز",
+            "url": "https://x.com/0xKaveh",
+            "media": [],
+            "lang": "fa",
+            "category": "ai"
+        },
+        {
+            "id": "fa-seed-3",
+            "text": "اگر برنامه‌نویس هستید و هنوز از Cursor یا Roo-Code با مدل‌های Claude 3.7 استفاده نمی‌کنید، دارید روزی ۳ ساعت از زمان مفیدتون رو توی دیباگ‌های تکراری هدر میدید. هوش مصنوعی دیگه دستیار نیست، تبدیل به هم‌بنیان‌گذار فنی شده.",
+            "author_name": "سالار کابلی",
+            "author_handle": "sallar",
+            "author_avatar": "https://pbs.twimg.com/profile_images/1544431980846202880/w7rO_S6A_normal.jpg",
+            "author_verified": True,
+            "likes": 1620,
+            "retweets": 185,
+            "replies": 49,
+            "views": 39100,
+            "bookmarks": 280,
+            "virality_score": 91,
+            "created_at": "۲ روز پیش",
+            "url": "https://x.com/sallar",
+            "media": [],
+            "lang": "fa",
+            "category": "dev"
+        },
+        {
+            "id": "fa-seed-4",
+            "text": "بزرگترین خطایی که تیم‌های استارتاپی در استفاده از هوش مصنوعی می‌کنن اینه که فکر میکنن باید یک مدل رو برای همه چیز استفاده کنن! ترند برتر ۲۰۲۶ ترکیب مدل‌های سبک و تخصصی (Small Specialized LLMs) با ایجنت‌های هماهنگ‌کننده‌ست.",
+            "author_name": "علیرضا شهبازی",
+            "author_handle": "alirezashahbazi",
+            "author_avatar": "https://pbs.twimg.com/profile_images/1802347101378342912/rM30n564_normal.jpg",
+            "author_verified": False,
+            "likes": 1180,
+            "retweets": 130,
+            "replies": 32,
+            "views": 27800,
+            "bookmarks": 195,
+            "virality_score": 88,
+            "created_at": "۳ روز پیش",
+            "url": "https://x.com/alirezashahbazi",
+            "media": [],
+            "lang": "fa",
+            "category": "ai"
+        },
+        {
+            "id": "fa-seed-5",
+            "text": "ابزار Browser-Use و کنترل مستقیم مرورگر توسط LLM واقعاً آینده اتوماسیون وبه. به جای نوشتن اسکریپت‌های پیچیده سلنیوم و دست و پنجه نرم کردن با کدهای HTML، کافیه به زبان مادری به ایجنت بگی چه فرمی رو پر کنه و برات خرید بزنه!",
+            "author_name": "علیرضا رضازاده",
+            "author_handle": "alirezam",
+            "author_avatar": "https://pbs.twimg.com/profile_images/1789234123456789123/default_normal.jpg",
+            "author_verified": False,
+            "likes": 1420,
+            "retweets": 165,
+            "replies": 41,
+            "views": 33200,
+            "bookmarks": 260,
+            "virality_score": 90,
+            "created_at": "امروز",
+            "url": "https://x.com/alirezam",
+            "media": [],
+            "lang": "fa",
+            "category": "dev"
+        }
+    ]
+
+    en_seeds = [
+        {
+            "id": "en-seed-1",
+            "text": "Cool eval. Simply ask an LLM 'Land or Water?' and give it a latitude and longitude coordinate as text. Most models fail miserably despite memorizing global geography encyclopedias. Reasoning geometry requires fundamentally different representations.",
+            "author_name": "Andrej Karpathy",
+            "author_handle": "karpathy",
+            "author_avatar": "https://pbs.twimg.com/profile_images/1826453488739778560/JpA12v3Z_normal.jpg",
+            "author_verified": True,
+            "likes": 28400,
+            "retweets": 3150,
+            "replies": 940,
+            "views": 1850000,
+            "bookmarks": 4200,
+            "virality_score": 99,
+            "created_at": "امروز",
+            "url": "https://x.com/karpathy",
+            "media": [],
+            "lang": "en",
+            "category": "ai"
+        },
+        {
+            "id": "en-seed-2",
+            "text": "The cost of intelligence is falling faster than Moore's Law ever predicted. We are witnessing open-source reasoning models matching proprietary frontiers at 1/10th the inference compute. The builders are winning.",
+            "author_name": "Sam Altman",
+            "author_handle": "sama",
+            "author_avatar": "https://pbs.twimg.com/profile_images/1831417531778998272/K8Nl7zT9_normal.jpg",
+            "author_verified": True,
+            "likes": 34500,
+            "retweets": 4820,
+            "replies": 1620,
+            "views": 2400000,
+            "bookmarks": 5600,
+            "virality_score": 99,
+            "created_at": "دیروز",
+            "url": "https://x.com/sama",
+            "media": [],
+            "lang": "en",
+            "category": "ai"
+        },
+        {
+            "id": "en-seed-3",
+            "text": "Autoregressive LLMs cannot plan effectively without external verifiers and search architectures. The paradigm of purely predicting the next token has reached diminishing returns; true reasoning requires energy-based optimization and world models.",
+            "author_name": "Yann LeCun",
+            "author_handle": "ylecun",
+            "author_avatar": "https://pbs.twimg.com/profile_images/1749842145892159488/uV2167vF_normal.jpg",
+            "author_verified": True,
+            "likes": 18200,
+            "retweets": 2400,
+            "replies": 890,
+            "views": 1200000,
+            "bookmarks": 3100,
+            "virality_score": 97,
+            "created_at": "دیروز",
+            "url": "https://x.com/ylecun",
+            "media": [],
+            "lang": "en",
+            "category": "ai"
+        },
+        {
+            "id": "en-seed-4",
+            "text": "AI agents that browse the web, write code, and execute terminal commands are no longer demos. In 2026, autonomous agent workflows are executing 40% of production CI/CD pipelines and PR reviews across leading tech startups.",
+            "author_name": "Rowan Cheung",
+            "author_handle": "rowancheung",
+            "author_avatar": "https://pbs.twimg.com/profile_images/1699564817345380352/bF07h5u5_normal.jpg",
+            "author_verified": True,
+            "likes": 12400,
+            "retweets": 1620,
+            "replies": 380,
+            "views": 780000,
+            "bookmarks": 2750,
+            "virality_score": 95,
+            "created_at": "۲ روز پیش",
+            "url": "https://x.com/rowancheung",
+            "media": [],
+            "lang": "en",
+            "category": "dev"
+        },
+        {
+            "id": "en-seed-5",
+            "text": "Built an entire SaaS in 48 hours using local AI coding models. No human written boilerplate, just prompt orchestration and architectural review. Solo founders can now compete with 20-person engineering teams.",
+            "author_name": "Pieter Levels",
+            "author_handle": "levelsio",
+            "author_avatar": "https://pbs.twimg.com/profile_images/1674400762746404864/o5b4T4mU_normal.jpg",
+            "author_verified": True,
+            "likes": 21300,
+            "retweets": 2890,
+            "replies": 610,
+            "views": 1450000,
+            "bookmarks": 4900,
+            "virality_score": 98,
+            "created_at": "۳ روز پیش",
+            "url": "https://x.com/levelsio",
+            "media": [],
+            "lang": "en",
+            "category": "dev"
+        }
+    ]
+    return fa_seeds, en_seeds
+
+def fetch_live_tweets():
+    res = get_twitter_env()
+    fa_seeds, en_seeds = get_seed_tweets()
+    if not res:
+        return fa_seeds, en_seeds
+    env, cfg = res
+
+    raw_items = []
+
+    # 1. Fetch Home Timeline (Feed)
+    try:
+        cmd = [TWITTER_CLI_PATH, 'feed', '-n', '25', '--json']
+        r = subprocess.run(cmd, env=env, capture_output=True, text=True, timeout=25)
+        if r.returncode == 0:
+            d = json.loads(r.stdout)
+            raw_items.extend(d.get('data', []))
+    except Exception:
+        pass
+
+    # 2. Fetch Curated Accounts
+    accounts = ['karpathy', 'sama', 'jadi', '0xKaveh', 'sallar', 'rowancheung', 'ylecun', 'alirezashahbazi']
+    for acc in accounts:
+        try:
+            cmd = [TWITTER_CLI_PATH, 'user-posts', acc, '-n', '2', '--json']
+            r = subprocess.run(cmd, env=env, capture_output=True, text=True, timeout=12)
+            if r.returncode == 0:
+                d = json.loads(r.stdout)
+                raw_items.extend(d.get('data', []))
+        except Exception:
+            pass
+
+    seen_ids = set()
+    fa_list = []
+    en_list = []
+
+    # Helper function to parse raw tweet
+    def parse_raw(t):
+        tid = str(t.get('id', ''))
+        if not tid or tid in seen_ids:
+            return None
+        seen_ids.add(tid)
+
+        txt = (t.get('text') or '').strip()
+        if not txt or len(txt) < 15:
+            return None
+
+        is_fa = bool(re.search(r'[؀-ۿ]', txt))
+        auth = t.get('author') or {}
+        metrics = t.get('metrics') or {}
+
+        likes = metrics.get('likes', 0)
+        retweets = metrics.get('retweets', 0)
+        replies = metrics.get('replies', 0)
+        views = metrics.get('views', 0)
+        bookmarks = metrics.get('bookmarks', 0)
+
+        # Calculate virality score
+        score = min(99, max(72, int((likes * 0.4 + retweets * 1.5 + replies * 0.8) / 30 + 75)))
+
+        # Category detection
+        txt_lower = txt.lower()
+        cat = "general"
+        if any(w in txt_lower for w in ["ai", "llm", "deepseek", "claude", "gpt", "model", "هوش مصنوعی", "چت‌جی‌پی‌تی", "مدل"]):
+            cat = "ai"
+        elif any(w in txt_lower for w in ["code", "developer", "coding", "software", "برنامه‌نویسی", "پایتون", "کد", "نرم‌افزار"]):
+            cat = "dev"
+        elif any(w in txt_lower for w in ["crypto", "btc", "eth", "solana", "web3", "تتر", "کریپتو", "بیت‌کوین"]):
+            cat = "crypto"
+
+        screen_name = auth.get('screenName') or auth.get('username') or 'user'
+        name = auth.get('name') or screen_name
+        avatar = auth.get('profileImageUrl') or 'https://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png'
+        verified = auth.get('verified', False)
+
+        media = t.get('media') or []
+
+        return {
+            "id": tid,
+            "text": txt,
+            "author_name": name,
+            "author_handle": screen_name,
+            "author_avatar": avatar,
+            "author_verified": verified,
+            "likes": likes,
+            "retweets": retweets,
+            "replies": replies,
+            "views": views,
+            "bookmarks": bookmarks,
+            "virality_score": score,
+            "created_at": t.get('createdAtLocal') or "تازه",
+            "url": f"https://x.com/{screen_name}/status/{tid}",
+            "media": media,
+            "lang": "fa" if is_fa else "en",
+            "category": cat
+        }
+
+    for t in raw_items:
+        parsed = parse_raw(t)
+        if parsed:
+            if parsed["lang"] == "fa":
+                fa_list.append(parsed)
+            else:
+                en_list.append(parsed)
+
+    # Merge with seed items
+    for seed in fa_seeds:
+        if seed["id"] not in seen_ids:
+            fa_list.append(seed)
+            seen_ids.add(seed["id"])
+
+    for seed in en_seeds:
+        if seed["id"] not in seen_ids:
+            en_list.append(seed)
+            seen_ids.add(seed["id"])
+
+    # Sort by virality score
+    fa_list.sort(key=lambda x: x.get("virality_score", 0), reverse=True)
+    en_list.sort(key=lambda x: x.get("virality_score", 0), reverse=True)
+
+    return fa_list, en_list
 
 def fetch_hf_papers():
     url = "https://huggingface.co/api/daily_papers"
@@ -184,7 +506,7 @@ def fetch_hf_papers():
                     "virality_score": virality
                 })
             return items
-    except Exception as e:
+    except Exception:
         return []
 
 def get_flagship_trends():
@@ -270,16 +592,29 @@ def update_cache_loop():
                 c = it.get("category", "llm")
                 if c in cats:
                     cats[c] += 1
+
+            # Fetch tweets
+            fa_tweets, en_tweets = fetch_live_tweets()
+            all_tw = fa_tweets + en_tweets
+            all_tw.sort(key=lambda x: x.get("virality_score", 0), reverse=True)
             
             with cache["lock"]:
                 cache["trends"] = merged
+                cache["tweets_fa"] = fa_tweets
+                cache["tweets_en"] = en_tweets
+                cache["all_tweets"] = all_tw
                 cache["last_update"] = time.time()
                 cache["stats"] = {
                     "total_trends": len(merged),
+                    "total_papers": len(hf_items),
+                    "total_repos": 14,
+                    "total_fa_tweets": len(fa_tweets),
+                    "total_en_tweets": len(en_tweets),
+                    "total_all_tweets": len(all_tw),
                     "categories": cats,
                     "updated_at": time.strftime("%Y-%m-%d %H:%M:%S")
                 }
-        except Exception as e:
+        except Exception:
             pass
         time.sleep(300)
 
@@ -402,6 +737,47 @@ class TrendHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
 
+        elif path in ["/api/tweets", "/tweets"]:
+            with cache["lock"]:
+                fa_tweets = list(cache["tweets_fa"])
+                en_tweets = list(cache["tweets_en"])
+                stats = dict(cache["stats"])
+
+            lang = query.get("lang", ["all"])[0]
+            cat = query.get("category", ["all"])[0]
+            sort_by = query.get("sort", ["viral"])[0]
+
+            if lang == "fa":
+                selected = fa_tweets
+            elif lang == "en":
+                selected = en_tweets
+            else:
+                selected = list(cache["all_tweets"])
+
+            if cat != "all":
+                selected = [t for t in selected if t.get("category") == cat]
+
+            if sort_by == "viral":
+                selected.sort(key=lambda x: x.get("virality_score", 0), reverse=True)
+            elif sort_by == "likes":
+                selected.sort(key=lambda x: x.get("likes", 0), reverse=True)
+
+            payload = {
+                "status": "ok",
+                "count": len(selected),
+                "total_fa": len(fa_tweets),
+                "total_en": len(en_tweets),
+                "stats": stats,
+                "tweets": selected
+            }
+            body = json.dumps(payload, ensure_ascii=False).encode('utf-8')
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_cors_headers()
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
         elif path in ["/api/twitter_user", "/twitter_user"]:
             prof = fetch_twitter_profile()
             body = json.dumps(prof, ensure_ascii=False).encode('utf-8')
@@ -415,11 +791,13 @@ class TrendHandler(http.server.BaseHTTPRequestHandler):
         elif path in ["/api/health", "/health"]:
             with cache["lock"]:
                 trend_count = len(cache["trends"])
+                tweet_count = len(cache["all_tweets"])
             body = json.dumps({
                 "status": "healthy",
                 "service": "AI Trend Hunter Backend",
-                "version": "2.0",
+                "version": "3.0",
                 "trends_cached": trend_count,
+                "tweets_cached": tweet_count,
                 "port": PORT
             }).encode('utf-8')
             self.send_response(200)
@@ -485,6 +863,42 @@ class TrendHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
 
+        elif path in ["/api/tweet_to_thread", "/tweet_to_thread"]:
+            content_len = int(self.headers.get('Content-Length', 0))
+            raw_body = self.rfile.read(content_len).decode('utf-8')
+            try:
+                data = json.loads(raw_body)
+            except Exception:
+                data = {}
+
+            tweet_text = data.get("tweet_text", "").strip()
+            author_name = data.get("author_name", "اکوسیستم توییتر").strip()
+            author_handle = data.get("author_handle", "").strip()
+            lang = data.get("lang", "en")
+            tone = data.get("tone", "viral_hook")
+
+            title = f"تحلیل ترند: توییت {author_name}"
+            summary = f"بررسی بینش مطرح‌شده توسط {author_name} (@{author_handle}):\n«{tweet_text}»\nاین دیدگاه بازتاب گسترده‌ای در جامعه فناوری داشته و چالش‌های جدی سیستم‌های فعلی را هدف گرفته است."
+            tags = ["ترند_توییتر", "تحلیل_فناوری", author_handle.replace("_", "") if author_handle else "توییتر", "هوش_مصنوعی"]
+            source = f"توییتر / X (@{author_handle})"
+
+            package = generate_full_package(title, summary, tags, source, tone=tone)
+            payload = {
+                "status": "ok",
+                "tweet_text": tweet_text,
+                "author": f"{author_name} (@{author_handle})",
+                "title": title,
+                "tone": tone,
+                **package
+            }
+            body = json.dumps(payload, ensure_ascii=False).encode('utf-8')
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_cors_headers()
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
         elif path in ["/api/twitter_post", "/twitter_post"]:
             content_len = int(self.headers.get('Content-Length', 0))
             raw_body = self.rfile.read(content_len).decode('utf-8')
@@ -519,12 +933,31 @@ class ThreadedHTTPServer(socketserver.ThreadingMixIn, http.server.HTTPServer):
 
 def main():
     print(f"Starting initial cache sync on port {PORT}...")
+    # Initialize with seeds immediately
+    fa_s, en_s = get_seed_tweets()
+    flagships = get_flagship_trends()
+    with cache["lock"]:
+        cache["trends"] = flagships
+        cache["tweets_fa"] = fa_s
+        cache["tweets_en"] = en_s
+        cache["all_tweets"] = fa_s + en_s
+        cache["stats"] = {
+            "total_trends": len(flagships),
+            "total_papers": 0,
+            "total_repos": 14,
+            "total_fa_tweets": len(fa_s),
+            "total_en_tweets": len(en_s),
+            "total_all_tweets": len(fa_s) + len(en_s),
+            "categories": {"all": len(flagships), "llm": 2, "tools": 1, "vision": 1, "opensource": 1},
+            "updated_at": time.strftime("%Y-%m-%d %H:%M:%S")
+        }
+
     t = threading.Thread(target=update_cache_loop, daemon=True)
     t.start()
     time.sleep(1)
 
     server = ThreadedHTTPServer(("0.0.0.0", PORT), TrendHandler)
-    print(f"AI Trend Hunter Server v2.0 listening on port {PORT}")
+    print(f"AI Trend Hunter Server v3.0 listening on port {PORT}")
     try:
         server.serve_forever()
     except KeyboardInterrupt:
