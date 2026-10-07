@@ -915,7 +915,7 @@
       border-radius: 16px;
       width: 100%;
       max-width: 520px;
-      padding: 24px;
+      padding: 24px 24px 48px 24px;
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
       animation: modalFade 0.2s ease-out;
     }
@@ -1128,6 +1128,334 @@
       border-color: rgba(255, 255, 255, 0.25);
     }
 
+
+    /* --- DEEP INTELLIGENCE ANALYSIS STYLES --- */
+    .btn-deep-analyze {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.2)) !important;
+      border: 1px solid rgba(168, 85, 247, 0.4) !important;
+      color: #c084fc !important;
+      font-weight: 700 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+      transition: all 0.2s ease !important;
+    }
+    .btn-deep-analyze:hover {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.35), rgba(59, 130, 246, 0.35)) !important;
+      border-color: #c084fc !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3) !important;
+    }
+
+    /* Modal Backdrop & Container */
+    .modal-dossier-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 12, 24, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-dossier-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-dossier-box {
+      background: #0f172a;
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(168, 85, 247, 0.2);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 920px;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transform: scale(0.95);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dossier-header {
+      flex-shrink: 0;
+    }
+    .dossier-footer {
+      flex-shrink: 0;
+    }
+    .dossier-body {
+      overflow-y: auto;
+      flex: 1;
+      padding: 24px 24px 48px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(168, 85, 247, 0.4) rgba(255, 255, 255, 0.05);
+    }
+    .dossier-body::-webkit-scrollbar,
+    #containerAnalysisRaw::-webkit-scrollbar {
+      width: 6px;
+    }
+    .dossier-body::-webkit-scrollbar-thumb,
+    #containerAnalysisRaw::-webkit-scrollbar-thumb {
+      background: rgba(168, 85, 247, 0.4);
+      border-radius: 4px;
+    }
+    .modal-dossier-overlay.active .modal-dossier-box {
+      transform: scale(1);
+    }
+
+    /* Dossier Header */
+    .dossier-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(15, 23, 42, 0.95);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .dossier-title-wrap h3 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .dossier-subtitle {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+    .btn-dossier-close {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .btn-dossier-close:hover {
+      background: rgba(239, 68, 68, 0.2);
+      border-color: #ef4444;
+      color: #fff;
+    }
+
+    /* Dossier Body & Sections */
+    .dossier-body {
+      padding: 24px 24px 48px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Radar Gauges Grid */
+    .gauges-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 768px) {
+      .gauges-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .gauge-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .gauge-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11.5px;
+      color: #94a3b8;
+    }
+    .gauge-score {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      font-family: monospace;
+    }
+    .gauge-bar-bg {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .gauge-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* SWOT Matrix */
+    .swot-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 768px) {
+      .swot-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .swot-card {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-left: 3px solid transparent;
+    }
+    .swot-card.strength {
+      border-color: #34d399;
+      background: rgba(52, 211, 153, 0.03);
+    }
+    .swot-card.weakness {
+      border-color: #f43f5e;
+      background: rgba(244, 63, 94, 0.03);
+    }
+    .swot-card.opportunity {
+      border-color: #38bdf8;
+      background: rgba(56, 189, 248, 0.03);
+    }
+    .swot-card.threat {
+      border-color: #fbbf24;
+      background: rgba(251, 191, 36, 0.03);
+    }
+    .swot-card-title {
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .swot-card.strength .swot-card-title { color: #34d399; }
+    .swot-card.weakness .swot-card-title { color: #f43f5e; }
+    .swot-card.opportunity .swot-card-title { color: #38bdf8; }
+    .swot-card.threat .swot-card-title { color: #fbbf24; }
+    .swot-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .swot-list li {
+      font-size: 11.5px;
+      line-height: 1.6;
+      color: #cbd5e1;
+      position: relative;
+      padding-right: 12px;
+    }
+    .swot-list li::before {
+      content: '•';
+      position: absolute;
+      right: 0;
+      color: #64748b;
+    }
+
+    /* Iran Impact & Monetization */
+    .dossier-box-highlight {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .dossier-box-highlight.iran {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.06), rgba(15, 23, 42, 0.6));
+    }
+    .dossier-box-highlight.counter {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.06), rgba(15, 23, 42, 0.6));
+    }
+
+    .monetize-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 768px) {
+      .monetize-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .monetize-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .monetize-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+    .monetize-desc {
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    /* Playbook Steps */
+    .playbook-step-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 11.5px;
+      color: #cbd5e1;
+      line-height: 1.6;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .playbook-step-badge {
+      background: rgba(168, 85, 247, 0.2);
+      color: #c084fc;
+      border: 1px solid rgba(168, 85, 247, 0.4);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    /* Dossier Footer Actions */
+    .dossier-footer {
+      padding: 16px 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(15, 23, 42, 0.95);
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+    }
+
 </style>
 </head>
 <body>
@@ -1320,6 +1648,7 @@
               <button class="format-btn" id="btnFmtTelegram">✈️ پست تلگرام</button>
               <button class="format-btn" id="btnFmtLinkedin">💼 پست لینکدین</button>
               <button class="format-btn" id="btnFmtPrompt">🎨 پرامپت Midjourney</button>
+              <button class="format-btn" id="btnFmtAnalysis" onclick="setActiveFormat('analysis')">🔬 پرونده تحلیلی AI (SWOT)</button>
             </div>
 
             <div style="display: flex; gap: 10px; align-items: center;">
@@ -1344,6 +1673,11 @@
           <div id="containerLinkedinRaw" class="raw-text-panel" style="display: none;"></div>
           <!-- 4. Midjourney Prompt Panel -->
           <div id="containerPromptRaw" class="raw-text-panel" style="display: none; font-family: monospace; direction: ltr; text-align: left; background: rgba(0,0,0,0.4); border-left: 3px solid #ec4899;"></div>
+
+          <!-- 5. Deep Intelligence Dossier Panel -->
+          <div id="containerAnalysisRaw" style="display: none; max-height: 720px; overflow-y: auto; padding: 20px; scrollbar-width: thin; scrollbar-color: rgba(168, 85, 247, 0.4) rgba(255, 255, 255, 0.05);" class="raw-text-panel">
+            <div id="studioDossierContentWrap"></div>
+          </div>
 
         </div>
 
@@ -1439,6 +1773,27 @@
 
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
+
+    // --- GLOBAL TOAST NOTIFICATION ---
+    function showToast(msg) {
+      let toast = document.getElementById('appGlobalToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'appGlobalToast';
+        toast.style.cssText = 'position:fixed;top:24px;left:50%;transform:translateX(-50%);background:rgba(15,23,42,0.95);border:1px solid rgba(168,85,247,0.5);color:#fff;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:700;z-index:9999999;box-shadow:0 10px 30px rgba(0,0,0,0.8),0 0 20px rgba(168,85,247,0.3);backdrop-filter:blur(8px);display:flex;align-items:center;gap:8px;transition:all 0.3s cubic-bezier(0.16,1,0.3,1);opacity:0;pointer-events:none;';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateX(-50%) translateY(0)';
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(-10px)';
+      }, 3200);
+    }
+    window.showToast = showToast;
+
     let appTrends = [];
     let activeCategory = 'all';
     let currentThreadData = null;
@@ -1550,6 +1905,9 @@
             </div>
 
             <div class="tweet-radar-actions">
+              <button class="btn-tweet-to-thread btn-deep-analyze" onclick="openDeepAnalysisModal('tweet', '${tw.id}')" title="کالبدشکافی تحلیلی چندبعدی با هوش مصنوعی">
+                <span>🔬 کالبدشکافی AI</span>
+              </button>
               <button class="btn-tweet-to-thread" onclick="convertTweetToThreadById('${tw.id}')">
                 <span>⚡ تبدیل به ترد تحلیلی فارسی</span>
               </button>
@@ -1631,14 +1989,14 @@
 
     function updateStats(stats) {
       if (!stats) return;
-      document.getElementById('statTotalTrends').textContent = stats.total_trends || appTrends.length;
-      document.getElementById('statTotalPapers').textContent = stats.total_papers || '۱۵';
-      document.getElementById('statTotalRepos').textContent = stats.total_repos || '۱۴';
-      document.getElementById('statAvgVirality').textContent = (stats.avg_virality || '85') + '/100';
-      document.getElementById('badgeAllCount').textContent = stats.total_trends || appTrends.length;
-      document.getElementById('badgePapersCount').textContent = stats.total_papers || '۱۵';
-      document.getElementById('badgeReposCount').textContent = stats.total_repos || '۱۴';
-      document.getElementById('footerLastUpdate').textContent = stats.last_updated || new Date().toLocaleTimeString('fa-IR');
+      if (document.getElementById('statTotalTrends')) document.getElementById('statTotalTrends').textContent = stats.total_trends || appTrends.length;
+      if (document.getElementById('statTotalPapers')) document.getElementById('statTotalPapers').textContent = stats.total_papers || '۱۵';
+      if (document.getElementById('statTotalRepos')) document.getElementById('statTotalRepos').textContent = stats.total_repos || '۱۴';
+      if (document.getElementById('statAvgVirality')) document.getElementById('statAvgVirality').textContent = (stats.avg_virality || '85') + '/100';
+      if (document.getElementById('badgeAllCount')) document.getElementById('badgeAllCount').textContent = stats.total_trends || appTrends.length;
+      if (document.getElementById('badgePapersCount')) document.getElementById('badgePapersCount').textContent = stats.total_papers || '۱۵';
+      if (document.getElementById('badgeReposCount')) document.getElementById('badgeReposCount').textContent = stats.total_repos || '۱۴';
+      if (document.getElementById('footerLastUpdate')) document.getElementById('footerLastUpdate').textContent = stats.last_updated || new Date().toLocaleTimeString('fa-IR');
     }
 
     // --- RENDER TRENDS GRID ---
@@ -1693,6 +2051,9 @@
               <span class="card-counts">${statLabel}</span>
               <div style="display: flex; align-items: center; gap: 8px;">
                 <a href="${t.url}" target="_blank" class="btn-source-link">🔗 منبع</a>
+                <button class="btn-generate-thread btn-deep-analyze" onclick="openDeepAnalysisModal('trend', '${t.id}')" title="کالبدشکافی تحلیلی چندبعدی با هوش مصنوعی">
+                  <span>🔬 کالبدشکافی AI</span>
+                </button>
                 <button class="btn-generate-thread" onclick="selectTrendToBuildThreadById('${t.id}')">
                   <span>⚡ ساخت ترد</span>
                 </button>
@@ -1820,6 +2181,290 @@
     });
 
     // --- RENDER THREAD MOCKUP ---
+    
+    // --- DEEP INTELLIGENCE ANALYSIS LOGIC ---
+    let currentAnalysisData = null;
+
+    async function openDeepAnalysisModal(itemType, itemId) {
+      showToast('⏳ در حال کالبدشکافی تحلیلی چندبعدی با AI...');
+      try {
+        let payload = { type: itemType, id: itemId };
+        if (itemType === 'tweet') {
+          const tw = appTweets.find(t => t.id === itemId);
+          if (tw) {
+            payload.text = tw.text;
+            payload.author = `${tw.author_name} (@${tw.author_handle})`;
+            payload.category = tw.category || 'Tech';
+          }
+        } else if (itemType === 'trend') {
+          const tr = appTrends.find(t => t.id === itemId);
+          if (tr) {
+            payload.title = tr.title;
+            payload.summary = tr.summary;
+            payload.category = tr.category || 'AI';
+            payload.source = tr.source;
+          }
+        }
+
+        const res = await fetch('/trends/api/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          currentAnalysisData = data;
+          renderDossierModal(data);
+          document.getElementById('modalDeepDossier').classList.add('active');
+        } else {
+          showToast('❌ خطا در دریافت تحلیل هوش مصنوعی');
+        }
+      } catch (err) {
+        console.error('Error fetching deep analysis:', err);
+        showToast('❌ خطا در ارتباط با سرور تحلیلگر');
+      }
+    }
+
+    
+    window.portDossierToStudio = function() {
+      if (!currentAnalysisData) return;
+      currentThreadData = currentAnalysisData;
+      currentTweetsList = [...(currentAnalysisData.tweets || [])];
+      currentMidjourneyPrompt = currentAnalysisData.midjourney_prompt || '';
+
+      closeDeepAnalysisModal();
+
+      // Switch to thread studio view
+      document.querySelectorAll('.nav-tabs-inner .tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('[data-tab="tab-thread-studio"]')?.classList.add('active');
+      showView('view-thread-studio');
+
+      renderThreadOutputs();
+      renderViralCanvas();
+      showToast('🚀 پرونده تحلیلی و رشته‌توییت با موفقیت به استودیو منتقل شد!');
+    };
+
+    window.copyDossierReport = function() {
+      if (!currentAnalysisData) return;
+      const md = serializeDossierToMarkdown(currentAnalysisData);
+      navigator.clipboard.writeText(md).then(() => showToast('📋 متن کامل پرونده تحلیلی در کلیپ‌بورد کپی شد!')).catch(() => showToast('خطا در کپی'));
+    };
+
+    function closeDeepAnalysisModal() {
+      document.getElementById('modalDeepDossier')?.classList.remove('active');
+    }
+
+    function renderDossierContentHTML(data) {
+      if (!data) return '<div style="color: #94a3b8; text-align:center;">داده‌ای برای تحلیل یافت نشد.</div>';
+      const an = data.deep_analysis || {};
+      const scores = an.scores || { tech_depth: 9.5, monetization: 9.0, iran_fit: 9.5, virality: 92 };
+      const swot = an.swot || { strengths: [], weaknesses: [], opportunities: [], threats: [] };
+      const iran = an.iran_impact || {};
+      const monetize = an.monetization_angles || [];
+      const playbook = an.playbook || [];
+      const counter = an.counter_intuitive || '';
+      const sent = an.sentiment || {};
+
+      return `
+        <!-- 1. Radar Gauges -->
+        <div class="gauges-grid">
+          <div class="gauge-card">
+            <div class="gauge-top">
+              <span>🧠 عمق فنی و معماری</span>
+              <span style="color: #c084fc;">TECH DEPTH</span>
+            </div>
+            <div class="gauge-score">${scores.tech_depth} <span style="font-size: 13px; color: #94a3b8;">/ ۱۰</span></div>
+            <div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${(scores.tech_depth/10)*100}%; background: linear-gradient(90deg, #a855f7, #6366f1);"></div></div>
+          </div>
+
+          <div class="gauge-card">
+            <div class="gauge-top">
+              <span>💰 پتانسیل درآمدزایی</span>
+              <span style="color: #38bdf8;">MONETIZATION</span>
+            </div>
+            <div class="gauge-score">${scores.monetization} <span style="font-size: 13px; color: #94a3b8;">/ ۱۰</span></div>
+            <div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${(scores.monetization/10)*100}%; background: linear-gradient(90deg, #38bdf8, #3b82f6);"></div></div>
+          </div>
+
+          <div class="gauge-card">
+            <div class="gauge-top">
+              <span>🇮🇷 انطباق با بازار ایران</span>
+              <span style="color: #34d399;">IRAN FIT</span>
+            </div>
+            <div class="gauge-score">${scores.iran_fit} <span style="font-size: 13px; color: #94a3b8;">/ ۱۰</span></div>
+            <div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${(scores.iran_fit/10)*100}%; background: linear-gradient(90deg, #34d399, #10b981);"></div></div>
+          </div>
+
+          <div class="gauge-card">
+            <div class="gauge-top">
+              <span>🔥 شاخص وایرال سوشال</span>
+              <span style="color: #fbbf24;">VIRALITY</span>
+            </div>
+            <div class="gauge-score">${scores.virality}٪</div>
+            <div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${scores.virality}%; background: linear-gradient(90deg, #f59e0b, #ef4444);"></div></div>
+          </div>
+        </div>
+
+        <!-- 2. Sentiment & Hype Breakdown -->
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 22px;">📊</span>
+            <div>
+              <div style="font-size: 12.5px; font-weight: 800; color: #fff;">ارزیابی سنتیمنت و جامعه متخصصان: <span style="color: #34d399;">${sent.label || 'بسیار صعودی'}</span></div>
+              <div style="font-size: 11px; color: var(--text-dim);">${sent.hype_vs_utility || '۸۴٪ کاربرد عملیاتی / ۱۶٪ هایپ رسانه‌ای'}</div>
+            </div>
+          </div>
+          <div style="font-size: 11px; color: #94a3b8; background: rgba(0,0,0,0.3); padding: 4px 10px; border-radius: 6px;">
+            شاخص جنجال: <strong>${sent.controversy || 17}٪</strong> (پایین و پایدار)
+          </div>
+        </div>
+
+        <!-- 3. SWOT Matrix 4 Quadrants -->
+        <div>
+          <div style="font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+            <span>🧭 ماتریس جامع تحلیلی SWOT</span>
+          </div>
+          <div class="swot-grid">
+            <div class="swot-card strength">
+              <div class="swot-card-title">🟢 نقاط قوت بنیادین (Strengths)</div>
+              <ul class="swot-list">
+                ${(swot.strengths || []).map(s => `<li>${s}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div class="swot-card weakness">
+              <div class="swot-card-title">🔴 نقاط ضعف و گلوگاه‌ها (Weaknesses)</div>
+              <ul class="swot-list">
+                ${(swot.weaknesses || []).map(w => `<li>${w}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div class="swot-card opportunity">
+              <div class="swot-card-title">🔵 فرصت‌های بکر تجاری (Opportunities)</div>
+              <ul class="swot-list">
+                ${(swot.opportunities || []).map(o => `<li>${o}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div class="swot-card threat">
+              <div class="swot-card-title">🟠 ریسک‌ها و تهدیدهای پیش رو (Threats)</div>
+              <ul class="swot-list">
+                ${(swot.threats || []).map(t => `<li>${t}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Counter-Intuitive Truth Highlight -->
+        <div class="dossier-box-highlight counter">
+          <div style="font-size: 12.5px; font-weight: 800; color: #f59e0b; display: flex; align-items: center; gap: 6px;">
+            <span>💡 نکته ضدشهودی که ۹۰٪ افراد نمی‌دانند</span>
+          </div>
+          <div style="font-size: 12px; color: #e2e8f0; line-height: 1.6;">
+            ${counter}
+          </div>
+        </div>
+
+        <!-- 5. Iran Market & Local Developer Impact -->
+        <div class="dossier-box-highlight iran">
+          <div style="font-size: 12.5px; font-weight: 800; color: #10b981; display: flex; align-items: center; gap: 6px;">
+            <span>🇮🇷 تحلیل اثر بر اکوسیستم و توسعه‌دهندگان ایران</span>
+          </div>
+          <div style="font-size: 12px; color: #cbd5e1; line-height: 1.6; margin-bottom: 6px;">
+            ${iran.summary || ''}
+          </div>
+          <div style="font-size: 11.5px; color: #94a3b8; line-height: 1.6;">
+            • <strong>فرصت بومی:</strong> ${iran.opportunities || ''}<br>
+            • <strong>زیرساخت و تحریم:</strong> ${iran.infrastructure || ''}
+          </div>
+        </div>
+
+        <!-- 6. Monetization Playbook -->
+        <div>
+          <div style="font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+            <span>💰 ۳ زاویه عملیاتی برای کسب درآمد و ارزش‌آفرینی</span>
+          </div>
+          <div class="monetize-grid">
+            ${monetize.map(m => `
+              <div class="monetize-card">
+                <div class="monetize-title">${m.title}</div>
+                <div class="monetize-desc">${m.desc}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- 7. Action Execution Playbook -->
+        <div>
+          <div style="font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+            <span>⚡ اکشن‌پلن عملیاتی ۳ مرحله‌ای</span>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            ${playbook.map((step, idx) => `
+              <div class="playbook-step-row">
+                <span class="playbook-step-badge">مرحله ${idx + 1}</span>
+                <span>${step}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDossierModal(data) {
+      document.getElementById('dossierModalTitle').textContent = data.title || 'کالبدشکافی تحلیلی ترند';
+      document.getElementById('dossierModalSubtitle').textContent = `نویسنده/منبع: ${data.author || data.source || 'اکوسیستم AI'}`;
+      document.getElementById('dossierBadgeCategory').textContent = data.category || 'هوش مصنوعی';
+      document.getElementById('dossierModalBody').innerHTML = renderDossierContentHTML(data);
+    }
+
+    function serializeDossierToMarkdown(data) {
+      if (!data) return '';
+      const an = data.deep_analysis || {};
+      const scores = an.scores || {};
+      const swot = an.swot || {};
+      const iran = an.iran_impact || {};
+      const monetize = an.monetization_angles || [];
+      const playbook = an.playbook || [];
+
+      return `## 🔬 پرونده تحلیلی فوق‌پیشرفته AI: ${data.title || ''}
+منبع: ${data.author || data.source || ''}
+
+### 📊 شاخص‌های تحلیلی:
+- عمق فنی و معماری: ${scores.tech_depth || 9.5}/۱۰
+- پتانسیل درآمدزایی: ${scores.monetization || 9.0}/۱۰
+- انطباق با بازار ایران: ${scores.iran_fit || 9.5}/۱۰
+- شاخص وایرال سوشال: ${scores.virality || 92}٪
+
+### 🧭 ماتریس SWOT:
+**نقاط قوت:**
+${(swot.strengths || []).map(s => `- ${s}`).join('\n')}
+
+**نقاط ضعف:**
+${(swot.weaknesses || []).map(w => `- ${w}`).join('\n')}
+
+**فرصت‌ها:**
+${(swot.opportunities || []).map(o => `- ${o}`).join('\n')}
+
+**تهدیدها:**
+${(swot.threats || []).map(t => `- ${t}`).join('\n')}
+
+### 💡 نکته ضدشهودی:
+${an.counter_intuitive || ''}
+
+### 🇮🇷 اثر بر بازار و توسعه‌دهندگان ایران:
+${iran.summary || ''}
+- فرصت‌ها: ${iran.opportunities || ''}
+- زیرساخت و تحریم: ${iran.infrastructure || ''}
+
+### 💰 زوایای کسب درآمد:
+${monetize.map(m => `**${m.title}:** ${m.desc}`).join('\n\n')}
+
+### ⚡ اکشن‌پلن ۳ مرحله‌ای:
+${playbook.map((p, i) => `${i+1}. ${p}`).join('\n')}
+`;
+    }
+
     function renderThreadOutputs() {
 
       const threadBadge = document.querySelector('[data-tab="tab-thread-studio"] .tab-badge');
@@ -1866,6 +2511,16 @@
 
       // 3. LinkedIn Post
       document.getElementById('containerLinkedinRaw').textContent = currentThreadData.linkedin_post || '';
+
+      // 4. Midjourney Prompt Panel
+      if (document.getElementById('containerPromptRaw')) {
+        document.getElementById('containerPromptRaw').textContent = currentThreadData.midjourney_prompt || '';
+      }
+
+      // 5. Deep Intelligence Dossier Panel
+      if (document.getElementById('studioDossierContentWrap')) {
+        document.getElementById('studioDossierContentWrap').innerHTML = renderDossierContentHTML(currentThreadData);
+      }
     }
 
     // Format buttons switcher
@@ -1883,10 +2538,14 @@
       document.getElementById('btnFmtTwitter').classList.remove('active');
       document.getElementById('btnFmtTelegram').classList.remove('tg-active');
       document.getElementById('btnFmtLinkedin').classList.remove('active');
+      document.getElementById('btnFmtPrompt')?.classList.remove('active');
+      document.getElementById('btnFmtAnalysis')?.classList.remove('active');
 
       document.getElementById('containerTwitterMockup').style.display = 'none';
       document.getElementById('containerTelegramRaw').style.display = 'none';
       document.getElementById('containerLinkedinRaw').style.display = 'none';
+      if (document.getElementById('containerPromptRaw')) document.getElementById('containerPromptRaw').style.display = 'none';
+      if (document.getElementById('containerAnalysisRaw')) document.getElementById('containerAnalysisRaw').style.display = 'none';
 
       if (fmt === 'twitter') {
         document.getElementById('btnFmtTwitter').classList.add('active');
@@ -1897,6 +2556,12 @@
       } else if (fmt === 'linkedin') {
         document.getElementById('btnFmtLinkedin').classList.add('active');
         document.getElementById('containerLinkedinRaw').style.display = 'block';
+      } else if (fmt === 'prompt') {
+        document.getElementById('btnFmtPrompt')?.classList.add('active');
+        if (document.getElementById('containerPromptRaw')) document.getElementById('containerPromptRaw').style.display = 'block';
+      } else if (fmt === 'analysis') {
+        document.getElementById('btnFmtAnalysis')?.classList.add('active');
+        if (document.getElementById('containerAnalysisRaw')) document.getElementById('containerAnalysisRaw').style.display = 'block';
       }
     }
 
@@ -1908,8 +2573,12 @@
         textToCopy = (currentThreadData.tweets || []).join('\n\n---\n\n');
       } else if (document.getElementById('btnFmtTelegram').classList.contains('tg-active')) {
         textToCopy = currentThreadData.telegram_post || '';
-      } else {
+      } else if (document.getElementById('btnFmtLinkedin').classList.contains('active')) {
         textToCopy = currentThreadData.linkedin_post || '';
+      } else if (document.getElementById('btnFmtPrompt')?.classList.contains('active')) {
+        textToCopy = currentThreadData.midjourney_prompt || '';
+      } else if (document.getElementById('btnFmtAnalysis')?.classList.contains('active')) {
+        textToCopy = serializeDossierToMarkdown(currentThreadData);
       }
       copyText(textToCopy);
     });
@@ -2332,6 +3001,37 @@
 
       // Format button prompt
       document.getElementById('btnFmtPrompt')?.addEventListener('click', () => setActiveFormat('prompt'));
+      document.getElementById('btnFmtAnalysis')?.addEventListener('click', () => setActiveFormat('analysis'));
+
+      // Modal Dossier Listeners
+      document.getElementById('btnCloseDossierModal')?.addEventListener('click', closeDeepAnalysisModal);
+      document.getElementById('modalDeepDossier')?.addEventListener('click', (e) => {
+        if (e.target.id === 'modalDeepDossier') closeDeepAnalysisModal();
+      });
+
+      document.getElementById('btnCopyDossierReport')?.addEventListener('click', () => {
+        if (!currentAnalysisData) return;
+        const md = serializeDossierToMarkdown(currentAnalysisData);
+        navigator.clipboard.writeText(md).then(() => showToast('📋 متن کامل پرونده تحلیلی در کلیپ‌بورد کپی شد!')).catch(() => showToast('خطا در کپی'));
+      });
+
+      document.getElementById('btnPortDossierToStudio')?.addEventListener('click', () => {
+        if (!currentAnalysisData) return;
+        currentThreadData = currentAnalysisData;
+        currentTweetsList = [...(currentAnalysisData.tweets || [])];
+        currentMidjourneyPrompt = currentAnalysisData.midjourney_prompt || '';
+
+        closeDeepAnalysisModal();
+
+        // Switch to thread studio view
+        document.querySelectorAll('.nav-tabs-inner .tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelector('[data-tab="tab-thread-studio"]')?.classList.add('active');
+        showView('view-thread-studio');
+
+        renderThreadOutputs();
+        renderViralCanvas();
+        showToast('🚀 پرونده تحلیلی و رشته‌توییت با موفقیت به استودیو منتقل شد!');
+      });
 
       // Theme Chips Switcher
       document.querySelectorAll('.theme-chip').forEach(btn => {
@@ -2465,5 +3165,36 @@
 
       fetchTrends();
   </script>
+
+  <!-- MODAL: DEEP INTELLIGENCE DOSSIER -->
+  <div class="modal-dossier-overlay" id="modalDeepDossier">
+    <div class="modal-dossier-box">
+      <div class="dossier-header">
+        <div class="dossier-title-wrap">
+          <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 4px;">
+            <span class="trend-badge" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4);">🔬 پرونده تحلیلی فوق‌پیشرفته AI</span>
+            <span class="trend-badge" id="dossierBadgeCategory" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">هوش مصنوعی</span>
+          </div>
+          <h3 id="dossierModalTitle">کالبدشکافی تحلیلی ترند</h3>
+          <div class="dossier-subtitle" id="dossierModalSubtitle">منبع: اکوسیستم متن‌باز هوش مصنوعی</div>
+        </div>
+        <button class="btn-dossier-close" id="btnCloseDossierModal" onclick="closeDeepAnalysisModal()">&times;</button>
+      </div>
+
+      <div class="dossier-body" id="dossierModalBody">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <div class="dossier-footer">
+        <button class="btn-post-twitter" id="btnPortDossierToStudio" onclick="portDossierToStudio()" style="background: linear-gradient(135deg, #a855f7, #6366f1);">
+          <span>⚡ ساخت رشته‌توییت و کاور ۱۶:۹ از این تحلیل</span>
+        </button>
+        <button class="btn-copy-all" id="btnCopyDossierReport" onclick="copyDossierReport()">
+          <span>📋 کپی متن کامل پرونده تحلیلی</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

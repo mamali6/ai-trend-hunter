@@ -618,76 +618,211 @@ def update_cache_loop():
             pass
         time.sleep(300)
 
-def generate_full_package(title, summary, tags, source, tone="viral_hook"):
+def build_deep_intelligence_analysis(title, text_content, author="", source="", category="AI", tone="viral_hook"):
     clean_title = title.split(":")[0].strip() if ":" in title else title
+    combined_text = f"{title} {text_content}".lower()
     
-    # 1. Thread Generation based on Tone
+    is_coding = any(k in combined_text for k in ['code', 'python', 'github', 'repo', 'برنامه‌نویسی', 'کد', 'agent', 'tool', 'terminal', 'bug', 'developer'])
+    is_reasoning = any(k in combined_text for k in ['reasoning', 'r1', 'deepseek', 'think', 'استدلال', 'ریاضی', 'math', 'benchmark', 'eval', 'logic', 'o1', 'o3'])
+    is_hardware = any(k in combined_text for k in ['gpu', 'vram', 'ram', 'کارت گرافیک', 'سرور', 'لوکال', 'local', 'ollama', 'hardware', 'هزینه', 'vllm'])
+    is_finance = any(k in combined_text for k in ['crypto', 'btc', 'market', 'قیمت', 'تتر', 'بیتکوین', 'معامله', 'سود', 'roi', 'سرمایه', 'finance', 'stock'])
+    is_agent = any(k in combined_text for k in ['agent', 'ایجنت', 'خودکار', 'automation', 'mcp', 'browser-use', 'tool'])
+
+    tech_depth = 9.6 if is_reasoning or is_coding else (8.8 if is_hardware or is_agent else 8.2)
+    monetization = 9.3 if is_finance or is_coding or is_agent else 8.6
+    iran_fit = 9.7 if ('local' in combined_text or 'لوکال' in combined_text or 'رایگان' in combined_text or 'open' in combined_text or 'متن‌باز' in combined_text) else 8.5
+    virality = 96 if ('بمب' in combined_text or 'breakthrough' in combined_text or 'fail' in combined_text or 'فوری' in combined_text or 'shock' in combined_text) else 93
+
+    entities = []
+    keywords = ['DeepSeek', 'Claude', 'OpenAI', 'GPT', 'Llama', 'Ollama', 'Python', 'Docker', 'Agent', 'MCP', 'PyTorch', 'vLLM', 'Qwen', 'Gemini', 'Cursor', 'Roo-Code', 'HuggingFace', 'FastAPI']
+    for kw in keywords:
+        if kw.lower() in combined_text:
+            entities.append(kw)
+    if not entities:
+        entities = ['Generative AI', 'Agentic Workflows', 'Open-Source LLMs']
+
+    entities_label = ", ".join(entities[:3])
+
+    strengths = [
+        f"معماری فوق‌بهینه در مقایسه با سیستم‌های بسته تجاری با تکیه بر {entities_label}",
+        "کاهش محسوس هزینه پردازش و استنتاج (Inference Cost) با امکان اجرای محلی روی سخت‌افزارهای استاندارد",
+        "عدم وابستگی به کلیدهای API گران‌قیمت خارجی و حفظ حریم خصوصی داده‌ها"
+    ]
+    weaknesses = [
+        "نیاز به تنظیم دقیق پرامپت‌ها و پارامترهای سیستم برای رسیدن به حداکثر دقت خروجی",
+        "احتمال افت کارایی در ورودی‌های غیرساختاریافته و تسک‌های استدلالی چندمرحله‌ای طولانی",
+        "کمبود منابع و راهنماهای توسعه بومی‌سازی‌شده به زبان فارسی در روزهای اولیه انتشار"
+    ]
+    opportunities = [
+        "فرصت پیشتازی (First-Mover) برای استارتاپ‌ها و توسعه‌دهندگان مستقل در اکوسیستم فناوری ایران",
+        "امکان ادغام در خطوط تولید نرم‌افزار، پشتیبانی خودکار و سیستم‌های تصمیم‌گیری هوشمند",
+        "ساخت میکرو-ابزارهای نرم‌افزاری (Micro-SaaS) با حاشیه سود بالا و عرضه به بازارهای داخلی و منطقه‌ای"
+    ]
+    threats = [
+        "سرعت بالای چرخه آپدیت فناوری که ممکن است ابزارهای جانبی قدیمی را سریعاً منسوخ کند",
+        "ریسک اختلالات شبکه و تحریم‌های زیرساختی که ضرورت توسعه لوکال را به مراتب بیشتر می‌کند"
+    ]
+
+    iran_impact = {
+        "summary": "این جهش فناوری به دلیل کاهش نیاز به سرورهای فوق‌گران دلاری، یک فرصت استراتژیک برای اکوسیستم هوش مصنوعی ایران است.",
+        "opportunities": "برنامه‌نویسان و شرکت‌های ایرانی می‌توانند بدون ریسک مسدود شدن حساب‌های خارجی یا پرداخت هزینه‌های سنگین ارزی، سیستم‌های هوشمند اختصاصی بسازند.",
+        "infrastructure": "با تکیه بر مدل‌ها و ابزارهای متن‌باز، امکان راه‌اندازی این سیستم‌ها روی سرورهای داخلی یا سیستم‌های محلی (Local Edge) با امنیت کامل مهیاست."
+    }
+
+    monetization_angles = [
+        {
+            "title": "۱. اتوماسیون B2B برای کسب‌وکارهای ایرانی",
+            "desc": "طراحی خطوط پردازش داده، گزارش‌گیری خودکار و دستیارهای تخصصی برای فروشگاه‌ها و شرکت‌ها بر پایه این فناوری."
+        },
+        {
+            "title": "۲. راه‌اندازی میکرو-سرویس اشتراکی (Micro-SaaS)",
+            "desc": "ارائه یک رابط کاربری ساده روی این قابلیت و دریافت حق عضویت ماهیانه ریالی از کاربران غیرفنی."
+        },
+        {
+            "title": "۳. خلق محتوای تخصصی و پرسونال برندینگ مرجع",
+            "desc": "انتشار رشته‌توییت‌های تحلیل فنی، دوره‌های کاربردی و آموزش‌های ویدیویی برای تثبیت لیدری در کامیونیتی."
+        }
+    ]
+
+    counter_intuitive = "برخلاف تصور ۹۰٪ افراد که فکر می‌کنند مدل‌های ابری چندصدمیلیارد دلاری شکست‌ناپذیرند، این رویکرد اثبات کرد که بهینه‌سازی الگوریتم و ادغام ابزارهای قطعی، سیستم‌های سبک‌تر را سریع‌تر و هوشمندتر می‌سازد!"
+
+    playbook = [
+        "گام ۱ (ارزیابی آزمایشگاهی): کدها و پایپ‌لاین پروژه را در یک محیط ایزوله لوکال تست کنید و نرخ خطای آن را بسنجید.",
+        "گام ۲ (تزریق داده‌های اختصاصی): پرامپت‌ها و داده‌های حوزه تخصصی خود را به عنوان ورودی به سیستم اعمال کنید.",
+        "گام ۳ (اتوماسیون عملیاتی): ابزار را با وب‌هوک و API به فرآیندهای کسب‌وکار، شبکه‌های اجتماعی یا داشبورد مدیریتی متصل کنید."
+    ]
+
+    return {
+        "title": title,
+        "clean_title": clean_title,
+        "author": author or "اکوسیستم هوش مصنوعی",
+        "source": source,
+        "category": category,
+        "entities": entities,
+        "scores": {
+            "tech_depth": tech_depth,
+            "monetization": monetization,
+            "iran_fit": iran_fit,
+            "virality": virality
+        },
+        "sentiment": {
+            "score": 93,
+            "label": "بسیار صعودی و تحول‌آفرین (High Bullish)",
+            "controversy": 17,
+            "hype_vs_utility": "۸۴٪ کاربرد عملیاتی / ۱۶٪ هایپ رسانه‌ای"
+        },
+        "swot": {
+            "strengths": strengths,
+            "weaknesses": weaknesses,
+            "opportunities": opportunities,
+            "threats": threats
+        },
+        "iran_impact": iran_impact,
+        "monetization_angles": monetization_angles,
+        "counter_intuitive": counter_intuitive,
+        "playbook": playbook
+    }
+
+def generate_full_package(title, summary, tags, source, author="", category="AI", tone="viral_hook"):
+    clean_title = title.split(":")[0].strip() if ":" in title else title
+    analysis = build_deep_intelligence_analysis(title, summary, author=author, source=source, category=category, tone=tone)
+
+    entities_str = ", ".join(analysis['entities'][:3])
+    swot_str = analysis['swot']['strengths'][0]
+    swot_weakness = analysis['swot']['weaknesses'][0]
+    swot_opp = analysis['swot']['opportunities'][0]
+    iran_note = analysis['iran_impact']['opportunities']
+    monetize_note = analysis['monetization_angles'][0]['desc']
+    counter_note = analysis['counter_intuitive']
+
+    # 1. Thread Generation based on Tone with Deep Intelligence
     if tone == "deep_tech":
         tweets = [
-            f"⚡ کالبدشکافی معماری {clean_title}؛ تحولی عمیق در مهندسی هوش مصنوعی\n\nدر این رشته‌توییت تخصصی، جزییات فنی، بنچمارک‌ها و نحوه پیاده‌سازی این ابزار رو به عنوان یک توسعه‌دهنده مرور می‌کنیم. 👇 🧵 ۱/۶",
-            f"🧠 ۱. چالش اصلی در سیستم‌های فعلی چه بود؟\n\nاکثر مدل‌ها در پردازش‌های پیچیده دچار توهم یا هزینه محاسباتی سرسام‌آور می‌شدند. خلاصه ماجرا:\n{summary}\n\nاینجا بود که تیم توسعه‌دهنده به سراغ بهینه‌سازی الگوریتم رفت. 🧵 ۲/۶",
-            f"🔬 ۲. معماری نوآورانه و تفاوت با نسل قبل:\n\nبرخلاف رویکردهای سنتی، در این سیستم از بهینه‌سازی مستقیم حافظه و محاسبات شناور موازی بهره گرفته شده که تاخیر در استنتاج را به حداقل می‌رساند. 🧵 ۳/۶",
-            f"📊 ۳. نتایج بنچمارک‌های عملیاتی:\n\nدر تست‌های ارزیابی کدنویسی و استدلال ریاضی، بهبودی چشمگیر نسبت به نسخه‌های پایه‌ای ثبت شده و نسبت عملکرد به هزینه (Cost-Efficiency) چند برابر شده است. 🧵 ۴/۶",
-            f"🛠️ ۴. راهنمای عملیاتی برای توسعه‌دهندگان:\n\nامکان اتصال از طریق API استاندارد و استفاده در سیستم‌های ایجنتیک و خطوط لوله داده مهیاست. منبع پروژه:\n🔗 {source}\n\nتست اولیه‌اش شگفت‌انگیز بود! 🧵 ۵/۶",
-            f"💡 جمع‌بندی فنی:\n\nاین جهش نشان می‌دهد آینده در تسخیر ابزارهایی است که روی کارایی بالا و انعطاف مهندسی متمرکز شده‌اند.\n\nاگه به مباحث هوش مصنوعی و کدنویسی علاقه داری ریتوییت کن! 🔁\n\n#{' #'.join(tags[:4])} 🧵 ۶/۶"
+            f"⚡ کالبدشکافی معماری {clean_title}؛ تحولی عمیق در مهندسی هوش مصنوعی\n\nدر این تحلیل ۶ مرحله‌ای، جزییات فنی، بنچمارک‌های استدلال و نقاط قوت پنهان آن ({entities_str}) را کالبدشکافی می‌کنیم. 👇 🧵 ۱/۶",
+            f"🧠 ۱. چالش اصلی سیستم‌های پیشین چه بود؟\n\n{summary}\n\nگلوگاه اصلی:\n«{swot_weakness}»\nکه تیم توسعه‌دهنده برای حل آن، معماری جدیدی طراحی کرد. 🧵 ۲/۶",
+            f"🔬 ۲. تمایز فنی و برتری معماری (Architectural Edge):\n\n{swot_str}\n\n💡 نکته ضدشهودی که ۹۰٪ افراد نمی‌دانند:\n{counter_note} 🧵 ۳/۶",
+            f"📊 ۳. بنچمارک‌ها و نسبت عملکرد به هزینه:\n\nشاخص عمق فنی: {analysis['scores']['tech_depth']}/۱۰ | پتانسیل کاربرد: {analysis['scores']['monetization']}/۱۰\nکاهش چشمگیر تاخیر در استنتاج (Latency) و بهینه‌سازی مصرف حافظه RAM/VRAM به اثبات رسیده است. 🧵 ۴/۶",
+            f"🛠️ ۴. راهنمای کاربردی برای توسعه‌دهندگان ایرانی:\n\n{iran_note}\n\nمنبع مرجع پروژه:\n🔗 {source} 🧵 ۵/۶",
+            f"💡 جمع‌بندی مهندسی و اکشن‌پلن:\n\n{analysis['playbook'][0]}\n\nاگر به مباحث مهندسی هوش مصنوعی علاقه دارید ریتوییت کنید! 🔁\n\n#{' #'.join(tags[:4])} 🧵 ۶/۶"
         ]
     elif tone == "business_roi":
         tweets = [
-            f"💼 انقلابی که بیزینس‌ها نباید از دست بدن: معرفی {clean_title}\n\nچگونه این ابزار هوش مصنوعی هزینه‌های عملیاتی را کاهش و راندمان تیم را تا ۳ برابر افزایش می‌دهد؟ تحلیل گام‌به‌گام 👇 🧵 ۱/۶",
-            f"📉 ۱. هدررفت منابع در شرکت‌ها قبل از این ابزار:\n\nساعت‌ها زمان نیروی انسانی صرف کارهای تکراری می‌شد:\n{summary}\n\nاین تحول، بازی کسب‌وکارها را بازتعریف می‌کند. 🧵 ۲/۶",
-            f"💰 ۲. محاسبه بازگشت سرمایه (ROI):\n\nپیاده‌سازی این سیستم در فرآیندهای بازاریابی، تولید محتوا و پشتیبانی، نیاز به زیرساخت‌های گران‌قیمت را تا ۷۰٪ کم می‌کند. 🧵 ۳/۶",
-            f"🎯 ۳. مزیت رقابتی زودهنگام (Early Adopter):\n\nکسب‌وکارهایی که امروز این ابزار را در ورک‌فلو خود ادغام کنند، در ۶ ماه آینده از رقبای سنتی فاصله چشمگیری خواهند گرفت. 🧵 ۴/۶",
-            f"🚀 ۴. استراتژی استقرار در ایران:\n\nحتی با دسترسی‌های محدود، می‌توان از قابلیت‌های این ابزار برای خودکارسازی وب‌سایت، سئو و مدیریت شبکه‌های اجتماعی استفاده کرد.\nمنبع:\n🔗 {source} 🧵 ۵/۶",
-            f"💎 جمع‌بندی مدیریتی:\n\nفناوری متوقف نمی‌شود؛ کسانی برنده هستند که سریع‌تر با ابزارهای نوین منطبق شوند.\n\nاین ترد رو بوکمارک 🔖 و با مدیران تیمت به اشتراک بذار! 🔁\n\n#{' #'.join(tags[:4])} 🧵 ۶/۶"
+            f"💼 انقلابی که بیزینس‌ها نباید از دست بدهند: معرفی {clean_title}\n\nچگونه این تحول جدید هوش مصنوعی هزینه‌های عملیاتی را کاهش و بازدهی مالی تیم را چند برابر می‌کند؟ تحلیل گام‌به‌گام 👇 🧵 ۱/۶",
+            f"📉 ۱. هدررفت منابع قبل از این ابزار:\n\n{summary}\n\nاین تحول، قوانین بازی را در بازار فناوری بازتعریف می‌کند. 🧵 ۲/۶",
+            f"💰 ۲. استراتژی بازگشت سرمایه (ROI) و کاهش هزینه:\n\n{swot_str}\n\nپیاده‌سازی این سیستم نیاز به سرورهای گران‌قیمت خارجی را تا حد زیادی برطرف می‌سازد. 🧵 ۳/۶",
+            f"🎯 ۳. زاویه درآمدزایی و فرصت‌های تجاری:\n\n{monetize_note}\n\nکسب‌وکارهایی که امروز این ابزار را در ورک‌فلو خود ادغام کنند، مزیت رقابتی سنگینی نسبت به رقبا پیدا خواهند کرد. 🧵 ۴/۶",
+            f"🚀 ۴. استراتژی استقرار و پیاده‌سازی در ایران:\n\n{iran_note}\n\nمرجع پروژه:\n🔗 {source} 🧵 ۵/۶",
+            f"💎 جمع‌بندی مدیریتی:\n\nفناوری متوقف نمی‌شود؛ برنده کسی است که سریع‌تر با ابزارهای نوین منطبق شود.\n\nاین ترد را بوکمارک کنید 🔖 و با تیم خود به اشتراک بگذارید! 🔁\n\n#{' #'.join(tags[:4])} 🧵 ۶/۶"
         ]
     else: # viral_hook (Default)
         tweets = [
-            f"🚨 بمب جدید دنیای هوش مصنوعی منفجر شد!\n\nمعرفی رسمی {clean_title}؛ ابزاری که تمام معادلات را به هم ریخته و به ترند اول دنیای فناوری تبدیل شده است! 🔥\n\nداستان چیست و چرا همه دارند درباره‌اش صحبت می‌کنند؟ در این رشته‌توییت ۶ مرحله‌ای بخوانید: 👇 🧵 ۱/۶",
-            f"❓ ۱. ماجرا از کجا شروع شد و چه دردی را دوا می‌کند؟\n\nتا پیش از این، اکثر ابزارها برای کارهای روزمره هزینه‌بر یا کند بودند. اما حالا:\n{summary}\n\nاین دقیقاً همان چیزی بود که جامعه متن‌باز منتظرش بود! 🧵 ۲/۶",
-            f"⚡ ۲. ویژگی‌های دیوانه‌واری که همه را شوکه کرده:\n\n🔹 سرعت خیره‌کننده و پردازش هوشمند\n🔹 دقت استدلالی شگفت‌انگیز\n🔹 سهولت راه‌اندازی و ادغام با پروژه‌ها\n\nاین ابزار نشان داد هوش مصنوعی وارد فاز جدیدی شده است. 🧵 ۳/۶",
-            f"🌍 ۳. در جامعه جهانی و ایران چه تاثیری دارد؟\n\nتوسعه‌دهندگان در سراسر جهان در حال مهاجرت به این اکوسیستم هستند. برای ما هم یعنی کاهش شدید هزینه‌ها و استقلال در پیاده‌سازی سرویس‌های فوق‌سریع هوش مصنوعی! 🧵 ۴/۶",
-            f"🔗 ۴. از کجا امتحانش کنیم؟\n\nمی‌توانید کدهای پروژه و مقالات تخصصی آن را از این آدرس بررسی کنید:\nمنبع: {source}\n\nپیشنهاد می‌کنم حتماً دموی آنلاین آن را تست کنید! 🧵 ۵/۶",
-            f"✨ ۵. کلام آخر:\n\nاین تازه شروع ماجراست و در ماه‌های آینده تاثیر این جهش را در تمام ابزارهای وب خواهیم دید.\n\nاگر این معرفی برات مفید بود، حتماً ریتوییت کن تا بقیه هم مطلع بشن و بوکمارکش کن! 🔖🔁\n\n#{' #'.join(tags[:4])} 🧵 ۶/۶"
+            f"🚨 بمب جدید دنیای فناوری منفجر شد!\n\nمعرفی رسمی {clean_title}؛ ابزاری که تمام توجه کامیونیتی هوش مصنوعی را به خود جلب کرده و در حال دگرگونی معادلات است! 🔥\n\nداستان چیست و چرا همه درباره‌اش حرف می‌زنند؟ در این رشته‌توییت بخوانید: 👇 🧵 ۱/۶",
+            f"❓ ۱. ماجرا از کجا شروع شد و چه مشکلی را حل می‌کند؟\n\n{summary}\n\nاین جهش، مستقیماً نیاز توسعه‌دهندگان به سیستم‌های پرهزینه را به چالش می‌کشد. 🧵 ۲/۶",
+            f"⚡ ۲. ویژگی‌های دیوانه‌واری که همه را غافلگیر کرده:\n\n🔹 {swot_str}\n🔹 عملکرد خارق‌العاده بر پایه {entities_str}\n🔹 پتانسیل کاربرد واقعی: {analysis['scores']['monetization']}/۱۰\n\n💡 رازی که خیلیا دقت نکردن:\n{counter_note} 🧵 ۳/۶",
+            f"🌍 ۳. در اکوسیستم فناوری و برای کاربران ایرانی چه تاثیری دارد؟\n\n{iran_note}\n\nاین یعنی کاهش هزینه‌ها و استقلال در توسعه ابزارهای هوشمند! 🧵 ۴/۶",
+            f"🔗 ۴. از کجا امتحانش کنیم؟\n\nمی‌توانید کدهای پروژه و جزییات فنی آن را در این آدرس بررسی کنید:\nمنبع: {source}\n\nپیشنهاد می‌کنم حتماً آن را امتحان کنید! 🧵 ۵/۶",
+            f"✨ ۵. کلام آخر:\n\n{analysis['playbook'][1]}\n\nاگر این ترد برات مفید بود لایک و ریتوییت کن تا بقیه هم مطلع بشن! 🔁❤️\n\n#{' #'.join(tags[:4])} 🧵 ۶/۶"
         ]
 
-    # 2. Telegram Post
-    tg_lines = [
-        f"🔥 **{clean_title}**",
-        "➖➖➖➖➖➖➖➖➖➖",
-        f"💡 **تحلیل کوتاه ترند:**\n{summary}",
-        "",
-        "💎 **نکات کلیدی و ارزش افزوده:**",
-        "• افزایش چشمگیر سرعت پردازش و دقت استدلال",
-        "• صرفه‌جویی شدید در هزینه‌های پیاده‌سازی و زیرساخت",
-        "• معماری مستقل با پشتیبانی کامل از ابزارهای اتوماسیون",
-        "",
-        f"🔗 **منبع رسمی و مستندات:**\n{source}",
-        "",
-        f"🏷️ #{' #'.join(tags[:5])}"
-    ]
-    telegram_post = "\n".join(tg_lines)
+    telegram_post = f"""🚀 کالبدشکافی ترند هوش مصنوعی: {clean_title}
 
-    # 3. LinkedIn Post
-    linkedin_post = f"جهش معنادار در اکوسیستم هوش مصنوعی: نگاهی به {clean_title}\n\nدر دنیای پرشتاب امروز، ابزارهایی پیروز میدان هستند که بتوانند شکاف میان تئوری‌های آکادمیک و بهره‌وری عملیاتی در دنیای واقعی را پر کنند.\n\n{summary}\n\nسه درس کلیدی برای رهبران فناوری و مهندسان نرم‌افزار:\n۱. اولویت کارایی و کاهش هزینه‌های استنتاج بر مدل‌های غول‌پیکر پرمصرف\n۲. خودکارسازی هوشمند فرآیندها به عنوان هسته اصلی سیستم‌های نسل بعد\n۳. شتاب چشمگیر توسعه نرم‌افزار به کمک ابزارهای تخصصی\n\nدیدگاه شما درباره این تحول چیست؟\n\n#{' #'.join(tags[:4])}"
+📌 خلاصه رویداد:
+{summary}
 
-    # 4. Midjourney / FLUX Cover Prompt (English)
-    midjourney_prompt = f"Futuristic cyberpunk concept art of {clean_title}, holographic neural network floating in high-tech laboratory, deep purple and electric cyan lighting, volumetric fog, glassmorphism UI displays, ultra-detailed 8k resolution, cinematic composition, Octane Render, unreal engine 5 aesthetic, photorealistic, wide angle 16:9 --ar 16:9 --v 6.1 --style raw"
+🔬 ابعاد فنی و تحلیلی:
+• موجودیت‌های کلیدی: {entities_str}
+• نقطه قوت بنیادین: {swot_str}
+• شاخص عمق فنی: {analysis['scores']['tech_depth']}/۱۰ | پتانسیل تجاری: {analysis['scores']['monetization']}/۱۰
 
-    # 5. Graphic Card Structured Data
+💡 نکته طلایی و ضدشهودی:
+{counter_note}
+
+🇮🇷 تاثیر بر توسعه‌دهندگان ایرانی:
+{iran_note}
+
+💰 زاویه تجاری و درآمدزایی:
+{monetize_note}
+
+🔗 منبع و مستندات:
+{source}
+
+🆔 @mmdsh0n2 | ⚡ c.q6v.ir/trends
+#{' #'.join(tags[:5])}"""
+
+    linkedin_post = f"""Exciting AI Breakthrough: An In-Depth Look at {clean_title}
+
+The landscape of Artificial Intelligence and developer tooling is evolving rapidly. Here is a breakdown of why {clean_title} is gaining massive traction:
+
+1. The Paradigm Shift:
+{summary}
+
+2. Architectural Moat:
+{swot_str}
+
+3. Industry Reality vs Hype:
+{counter_note}
+
+4. Commercial & Implementation Takeaways:
+{monetize_note}
+
+Source & Repository: {source}
+
+#ArtificialIntelligence #MachineLearning #TechTrends #SoftwareEngineering #{tags[0]}"""
+
+    midjourney_prompt = f"/imagine prompt: Futuristic high-tech cybernetic visualization representing {clean_title}, holographic neural network schematic, sleek glowing data streams, dark obsidian and neon violet cyberpunk aesthetic, octane render, 8k resolution, cinematic lighting, editorial tech magazine cover style --ar 16:9 --v 6.1"
+
     card_data = {
-        "hero_title": clean_title[:45],
-        "category_tag": tags[0] if tags else "هوش مصنوعی",
-        "virality_score": 96,
-        "metrics": [
-            {"label": "نرخ رشد", "value": "+۳۸۰٪ انفجاری", "icon": "⚡", "color": "#38bdf8"},
-            {"label": "کیفیت و استدلال", "value": "برابری با رقبا", "icon": "🧠", "color": "#a855f7"},
-            {"label": "معماری و دسترسی", "value": "مستقل و بهینه", "icon": "🔓", "color": "#34d399"}
-        ],
-        "takeaways": [
-            f"تحلیل معماری نوآورانه و تحول در زیرساخت {clean_title}",
-            "کاهش شدید هزینه‌های پردازشی و افزایش بهره‌وری سیستم‌های هوشمند",
-            "قابلیت استقرار مستقل و ایجاد برتری رقابتی برای توسعه‌دهندگان"
-        ]
+        "title": clean_title,
+        "subtitle": f"کالبدشکافی تحلیلی {entities_str} و معماری هوش مصنوعی",
+        "badge": "⚡ BREAKTHROUGH ANALYSIS",
+        "tagline": f"عمق فنی: {analysis['scores']['tech_depth']}/۱۰ | وایرال: {analysis['scores']['virality']}٪",
+        "takeaway1": f"مزیت رقابتی: {swot_str[:65]}...",
+        "takeaway2": f"فرصت ایران: {iran_note[:65]}...",
+        "takeaway3": f"نکته کلیدی: {counter_note[:65]}...",
+        "source": source,
+        "author": f"MMD (@{author if author else 'mmdsh0n2'})",
+        "retweets": f"{int(analysis['scores']['virality'] * 12)}",
+        "stars": "4.9k"
     }
 
     return {
@@ -695,8 +830,10 @@ def generate_full_package(title, summary, tags, source, tone="viral_hook"):
         "telegram_post": telegram_post,
         "linkedin_post": linkedin_post,
         "midjourney_prompt": midjourney_prompt,
-        "card_data": card_data
+        "card_data": card_data,
+        "deep_analysis": analysis
     }
+
 
 class TrendHandler(http.server.BaseHTTPRequestHandler):
     def send_cors_headers(self):
@@ -729,6 +866,16 @@ class TrendHandler(http.server.BaseHTTPRequestHandler):
                 "count": len(trends),
                 "trends": trends
             }
+            body = json.dumps(payload, ensure_ascii=False).encode('utf-8')
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_cors_headers()
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+        elif path in ["/api/analyze", "/analyze"]:
+            payload = {"status": "ok", "message": "Deep Intelligence Analysis Engine v4.0 active. Use POST to trigger full autopsy."}
             body = json.dumps(payload, ensure_ascii=False).encode('utf-8')
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -899,6 +1046,64 @@ class TrendHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
 
+        elif path in ["/api/analyze", "/analyze"]:
+            content_len = int(self.headers.get('Content-Length', 0))
+            raw_body = self.rfile.read(content_len).decode('utf-8')
+            try:
+                data = json.loads(raw_body)
+            except Exception:
+                data = {}
+
+            item_type = data.get("type", "trend")
+            item_id = data.get("id")
+            tone = data.get("tone", "viral_hook")
+
+            title = data.get("title", "بررسی ترند هوش مصنوعی")
+            summary = data.get("summary", "") or data.get("text", "")
+            author = data.get("author", "")
+            source = data.get("source", "اکوسیستم هوش مصنوعی")
+            category = data.get("category", "AI")
+
+            if item_type == "trend" and item_id:
+                with cache["lock"]:
+                    matched = [t for t in cache["trends"] if t.get("id") == item_id]
+                    if matched:
+                        item = matched[0]
+                        title = item.get("title", title)
+                        summary = item.get("summary", summary)
+                        source = item.get("source", source)
+                        category = item.get("category", "AI")
+                        author = item.get("author", "جامعه هوش مصنوعی")
+            elif item_type == "tweet" and item_id:
+                with cache["lock"]:
+                    matched = [t for t in cache.get("tweets", []) if t.get("id") == item_id]
+                    if matched:
+                        tw = matched[0]
+                        title = f"توییت {tw.get('author_name', '')}"
+                        summary = tw.get("text", "")
+                        author = f"{tw.get('author_name', '')} (@{tw.get('author_handle', '')})"
+                        source = f"X.com/{tw.get('author_handle', '')}"
+                        category = tw.get("category", "Tech")
+
+            tags = ["هوش_مصنوعی", "کالبدشکافی_فنی", "ترند_روز"]
+            package = generate_full_package(title, summary, tags, source, author=author, category=category, tone=tone)
+            payload = {
+                "status": "ok",
+                "item_type": item_type,
+                "item_id": item_id,
+                "title": title,
+                "author": author,
+                "source": source,
+                "tone": tone,
+                **package
+            }
+            body = json.dumps(payload, ensure_ascii=False).encode('utf-8')
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_cors_headers()
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
         elif path in ["/api/twitter_post", "/twitter_post"]:
             content_len = int(self.headers.get('Content-Length', 0))
             raw_body = self.rfile.read(content_len).decode('utf-8')
